@@ -22,6 +22,10 @@ export default class Service {
   public utilities: Utilities;
   public totalTraffic: TotalTraffic;
 
+  public static formatDate(date: Date) {
+    return date.toISOString().split("T").shift();
+  }
+
   public static getServiceUrl() {
     return Service.PRODUCTION_SERVER;
   }

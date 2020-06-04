@@ -33,4 +33,9 @@ describe("service", () => {
   it("should be an instance of Service", () => {
     expect(service).toBeInstanceOf(Service);
   });
+
+  it("should format dates", () => {
+    const date = new Date("2020-02-03T08:44:00Z");
+    expect(Service.formatDate(date)).toBe("2020-02-03");
+  });
 });
