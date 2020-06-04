@@ -1,8 +1,12 @@
 import { getService } from "../../Service.test";
 import { TotalTraffic } from "./TotalTraffic";
-import { ITotalTrafficParams } from "./TotalTraffice.types";
+import {
+  ITotalTrafficDesktopMobileSplitParams,
+  ITotalTrafficParams,
+} from "./TotalTraffice.types";
 import { SimilarWebError } from "../../Service.types";
 import { IMeta } from "../Component.types";
+import Service from "../../Service";
 
 const service = getService();
 const testDomain = "bbc.com";
@@ -28,6 +32,14 @@ describe("service.totalTraffic", () => {
     country: "world",
     granularity: "Daily",
     main_domain_only: false,
+  };
+  const now = new Date();
+  const then = new Date();
+  then.setUTCFullYear(now.getUTCFullYear() - 1);
+  const optionsWithDates: ITotalTrafficDesktopMobileSplitParams = {
+    ...options,
+    start_date: Service.formatDate(now),
+    end_date: Service.formatDate(then),
   };
 
   it("should be an instance of TotalTraffic", () => {
@@ -113,6 +125,22 @@ describe("service.totalTraffic", () => {
       expect(item.date).toBeTruthy();
       expect(item.bounce_rate).toBeGreaterThan(0);
 
+      done();
+    });
+  });
+
+  describe("desktop mobile split", () => {
+    // At this time, no data is being returned by their own demos
+    // Use this end point at your own risk
+    it.skip("should get", async (done) => {
+      const results = await service.totalTraffic.desktopMobileSplit(
+        testDomain,
+        optionsWithDates
+      );
+      expect(results).toBeTruthy();
+      expectTrafficMeta(results.meta, options);
+      expect(results.desktop_visit_share).toBeGreaterThanOrEqual(0);
+      expect(results.mobile_web_visit_share).toBeGreaterThanOrEqual(0);
       done();
     });
   });

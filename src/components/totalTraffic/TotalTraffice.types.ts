@@ -52,3 +52,16 @@ export interface ITotalTrafficBounceRateItem {
   date: string; // "2017-11-01"
   bounce_rate: number; // 0.6217884981708697
 }
+
+export interface ITotalTrafficDesktopMobileSplitParams
+  extends IFormatParam,
+    IMainDomainOnlyParam,
+    IShowVerifiedParam,
+    ICountryParam,
+    IDateRangeParams {}
+
+export interface ITotalTrafficDesktopMobileSplit
+  extends IMeta<ITotalTrafficDesktopMobileSplitParams> {
+  desktop_visit_share: number; // 0.3567780202168426,
+  mobile_web_visit_share: number; // 0.6432219797831574
+}

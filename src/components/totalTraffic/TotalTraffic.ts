@@ -5,6 +5,8 @@ import {
   ITotalTrafficVisits,
   ITotalTrafficParams,
   ITotalTrafficBounceRate,
+  ITotalTrafficDesktopMobileSplitParams,
+  ITotalTrafficDesktopMobileSplit,
 } from "./TotalTraffice.types";
 
 export class TotalTraffic extends Component {
@@ -77,6 +79,23 @@ export class TotalTraffic extends Component {
     return this.client
       .get<ITotalTrafficBounceRate>(
         `v1/website/${domain}/total-traffic-and-engagement/bounce-rate`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the desktop vs mobile web traffic share split for the selected time period (1 month minimum).
+   */
+  public desktopMobileSplit(
+    domain: string,
+    options: ITotalTrafficDesktopMobileSplitParams
+  ): Promise<ITotalTrafficDesktopMobileSplit> {
+    return this.client
+      .get<ITotalTrafficDesktopMobileSplit>(
+        `v1/website/${domain}/total-traffic-and-engagement/visits-split`,
         {
           params: options,
         }
