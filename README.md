@@ -39,6 +39,9 @@ try {
 } catch (error) {}
 ```
 
+There is a limitation of 10 API request per second per SimilarWeb account; if 2 API keys belong to the same account,
+this limitation applies to both keys.
+
 ## License and agreements
 
 This package is provided through an MIT license. Usage of this package is freely available without restriction.
