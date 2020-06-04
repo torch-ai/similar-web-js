@@ -4,6 +4,7 @@ import {
   ITotalTrafficPagesVisits,
   ITotalTrafficVisits,
   ITotalTrafficParams,
+  ITotalTrafficBounceRate,
 } from "./TotalTraffice.types";
 
 export class TotalTraffic extends Component {
@@ -57,6 +58,25 @@ export class TotalTraffic extends Component {
     return this.client
       .get<ITotalTrafficAverageVisitDuration>(
         `v1/website/${domain}/total-traffic-and-engagement/average-visit-duration`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the bounce rate for the given domain.
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL and set granularity to daily or weekly
+   */
+  public bounceRate(
+    domain: string,
+    options: ITotalTrafficParams
+  ): Promise<ITotalTrafficBounceRate> {
+    return this.client
+      .get<ITotalTrafficBounceRate>(
+        `v1/website/${domain}/total-traffic-and-engagement/bounce-rate`,
         {
           params: options,
         }

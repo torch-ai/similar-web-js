@@ -98,4 +98,22 @@ describe("service.totalTraffic", () => {
       done();
     });
   });
+
+  describe("bounce rate", () => {
+    it("should get", async (done) => {
+      const results = await service.totalTraffic.bounceRate(
+        testDomain,
+        options
+      );
+      expect(results).toBeTruthy();
+      expectTrafficMeta(results.meta, options);
+
+      expect(results.bounce_rate.length).toBeGreaterThan(0);
+      const item = results.bounce_rate.shift();
+      expect(item.date).toBeTruthy();
+      expect(item.bounce_rate).toBeGreaterThan(0);
+
+      done();
+    });
+  });
 });

@@ -43,3 +43,12 @@ export interface ITotalTrafficAverageVisitDurationItem {
   date: string; // "2017-11-01"
   average_visit_duration: number; // 153.5438764195723
 }
+
+export interface ITotalTrafficBounceRate extends IMeta<ITotalTrafficParams> {
+  bounce_rate: ITotalTrafficBounceRateItem[];
+}
+
+export interface ITotalTrafficBounceRateItem {
+  date: string; // "2017-11-01"
+  bounce_rate: number; // 0.6217884981708697
+}
