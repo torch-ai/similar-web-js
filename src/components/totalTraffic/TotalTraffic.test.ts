@@ -1,6 +1,7 @@
 import { getService } from "../../Service.test";
 import { TotalTraffic } from "./TotalTraffic";
 import {
+  ITotalTrafficDeduplicatedAudienceParams,
   ITotalTrafficDesktopMobileSplitParams,
   ITotalTrafficParams,
 } from "./TotalTraffice.types";
@@ -13,14 +14,16 @@ const testDomain = "bbc.com";
 
 const expectTrafficMeta = (
   meta: IMeta<any>["meta"],
-  options: ITotalTrafficParams
+  options:
+    | ITotalTrafficParams
+    | ITotalTrafficDeduplicatedAudienceParams
+    | ITotalTrafficDesktopMobileSplitParams
 ) => {
   expect(meta).toBeTruthy();
   expect(meta.last_updated).toBeTruthy();
   expect(meta.status).toBe("Success");
   expect(meta.request.domain).toBe(testDomain);
   expect(meta.request.country).toBe(options.country);
-  expect(meta.request.granularity).toBe(options.granularity);
   expect(meta.request.main_domain_only).toBe(options.main_domain_only);
 };
 
@@ -28,19 +31,21 @@ const expectTrafficMeta = (
  * The tests
  */
 describe("service.totalTraffic", () => {
-  const options: ITotalTrafficParams = {
+  const defaultOptions = {
     country: "world",
-    granularity: "Daily",
     main_domain_only: false,
   };
-  const now = new Date();
-  const then = new Date();
-  then.setUTCFullYear(now.getUTCFullYear() - 1);
-  const optionsWithDates: ITotalTrafficDesktopMobileSplitParams = {
-    ...options,
-    start_date: Service.formatDate(now),
-    end_date: Service.formatDate(then),
+  const options: ITotalTrafficParams = {
+    ...defaultOptions,
+    granularity: "Daily",
   };
+  const earlier = new Date();
+  earlier.setUTCMonth(earlier.getUTCMonth() - 3);
+  const earlierThanThat = new Date();
+  earlierThanThat.setUTCFullYear(
+    earlier.getUTCFullYear() - 1,
+    earlier.getUTCMonth()
+  );
 
   it("should be an instance of TotalTraffic", () => {
     expect(service.totalTraffic).toBeInstanceOf(TotalTraffic);
@@ -130,17 +135,53 @@ describe("service.totalTraffic", () => {
   });
 
   describe("desktop mobile split", () => {
-    // At this time, no data is being returned by their own demos
-    // Use this end point at your own risk
-    it.skip("should get", async (done) => {
+    it("should get", async (done) => {
+      const optionsWithDates: ITotalTrafficDesktopMobileSplitParams = {
+        ...defaultOptions,
+        start_date: Service.formatDate(earlierThanThat, "month"),
+        end_date: Service.formatDate(earlier, "month"),
+      };
       const results = await service.totalTraffic.desktopMobileSplit(
         testDomain,
         optionsWithDates
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, options);
+      expectTrafficMeta(results.meta, optionsWithDates);
       expect(results.desktop_visit_share).toBeGreaterThanOrEqual(0);
       expect(results.mobile_web_visit_share).toBeGreaterThanOrEqual(0);
+      done();
+    });
+  });
+
+  describe("deduplicated audience", () => {
+    it("should get", async (done) => {
+      const optionsWithDates: ITotalTrafficDeduplicatedAudienceParams = {
+        ...defaultOptions,
+        start_date: Service.formatDate(earlierThanThat, "month"),
+        end_date: Service.formatDate(earlier, "month"),
+      };
+      const results = await service.totalTraffic.deduplicatedAudience(
+        testDomain,
+        optionsWithDates
+      );
+      expect(results).toBeTruthy();
+      expectTrafficMeta(results.meta, optionsWithDates);
+      expect(results.data.length).toBeGreaterThan(0);
+      const data = results.data.shift();
+      expect(data.date).toBeTruthy();
+      expect(
+        data.dedup_data.desktop_and_mobile_web_audience_share
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        data.dedup_data.desktop_only_audience_share
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        data.dedup_data.mobile_web_only_audience_share
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        data.dedup_data.total_deduplicated_audience
+      ).toBeGreaterThanOrEqual(0);
+
       done();
     });
   });

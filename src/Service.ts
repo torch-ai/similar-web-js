@@ -22,8 +22,14 @@ export default class Service {
   public utilities: Utilities;
   public totalTraffic: TotalTraffic;
 
-  public static formatDate(date: Date) {
-    return date.toISOString().split("T").shift();
+  public static formatDate(date: Date, granularity: "date" | "month" = "date") {
+    const formattedDate = date.toISOString().split("T").shift();
+    if (granularity === "date") {
+      return formattedDate;
+    }
+
+    const [year, month] = formattedDate.split("-");
+    return `${year}-${month}`;
   }
 
   public static getServiceUrl() {
@@ -100,7 +106,7 @@ export default class Service {
         this.options.onInvalidCredentials();
       }
 
-      if (error.response?.data.meta.error_code) {
+      if (error.response?.data?.meta?.error_code) {
         return reject(this.getSimilarWebError(error.response.data.meta));
       }
 

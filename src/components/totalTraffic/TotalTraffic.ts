@@ -5,8 +5,10 @@ import {
   ITotalTrafficVisits,
   ITotalTrafficParams,
   ITotalTrafficBounceRate,
-  ITotalTrafficDesktopMobileSplitParams,
   ITotalTrafficDesktopMobileSplit,
+  ITotalTrafficDeduplicatedAudience,
+  ITotalTrafficDeduplicatedAudienceParams,
+  ITotalTrafficDesktopMobileSplitParams,
 } from "./TotalTraffice.types";
 
 export class TotalTraffic extends Component {
@@ -96,6 +98,23 @@ export class TotalTraffic extends Component {
     return this.client
       .get<ITotalTrafficDesktopMobileSplit>(
         `v1/website/${domain}/total-traffic-and-engagement/visits-split`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the desktop vs mobile web traffic share split for the selected time period (1 month minimum).
+   */
+  public deduplicatedAudience(
+    domain: string,
+    options: ITotalTrafficDeduplicatedAudienceParams
+  ): Promise<ITotalTrafficDeduplicatedAudience> {
+    return this.client
+      .get<ITotalTrafficDeduplicatedAudience>(
+        `v1/website/${domain}/dedup/deduplicated-audiences`,
         {
           params: options,
         }

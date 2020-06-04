@@ -65,3 +65,24 @@ export interface ITotalTrafficDesktopMobileSplit
   desktop_visit_share: number; // 0.3567780202168426,
   mobile_web_visit_share: number; // 0.6432219797831574
 }
+
+export interface ITotalTrafficDeduplicatedAudienceParams
+  extends IFormatParam,
+    IMainDomainOnlyParam,
+    ICountryParam,
+    IDateRangeParams {}
+
+export interface ITotalTrafficDeduplicatedAudience
+  extends IMeta<ITotalTrafficDeduplicatedAudienceParams> {
+  data: ITotalTrafficDeduplicatedAudienceDataItem[];
+}
+
+export interface ITotalTrafficDeduplicatedAudienceDataItem {
+  date: string; // "2018-03-01"
+  dedup_data: {
+    total_deduplicated_audience: number; // 11316966;
+    desktop_only_audience_share: number; // 0.0726374583011454;
+    mobile_web_only_audience_share: number; // 0.6359951960315612;
+    desktop_and_mobile_web_audience_share: number; // 0.29136730561082097;
+  };
+}
