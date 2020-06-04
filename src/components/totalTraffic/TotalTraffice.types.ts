@@ -8,7 +8,7 @@ import {
   IMeta,
 } from "../Component.types";
 
-export interface ITotalTrafficVisitsParams
+export interface ITotalTrafficParams
   extends IFormatParam,
     IMainDomainOnlyParam,
     IShowVerifiedParam,
@@ -16,7 +16,7 @@ export interface ITotalTrafficVisitsParams
     ICountryParam,
     Partial<IDateRangeParams> {}
 
-export interface ITotalTrafficVisits extends IMeta<ITotalTrafficVisitsParams> {
+export interface ITotalTrafficVisits extends IMeta<ITotalTrafficParams> {
   visits: ITotalTrafficVisitsItem[];
 }
 
@@ -25,12 +25,21 @@ export interface ITotalTrafficVisitsItem {
   visits: number; // 2.4781431175045157
 }
 
-export interface ITotalTrafficPagesVisits
-  extends IMeta<ITotalTrafficVisitsParams> {
+export interface ITotalTrafficPagesVisits extends IMeta<ITotalTrafficParams> {
   pages_per_visit: ITotalTrafficVisitsItem[];
 }
 
 export interface ITotalTrafficVisitsItem {
   date: string; // "2017-11-01"
   pages_per_visit: number; // 2.4781431175045157
+}
+
+export interface ITotalTrafficAverageVisitDuration
+  extends IMeta<ITotalTrafficParams> {
+  average_visit_duration: ITotalTrafficAverageVisitDurationItem[];
+}
+
+export interface ITotalTrafficAverageVisitDurationItem {
+  date: string; // "2017-11-01"
+  average_visit_duration: number; // 153.5438764195723
 }
