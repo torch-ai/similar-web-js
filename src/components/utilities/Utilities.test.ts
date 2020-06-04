@@ -1,7 +1,6 @@
 import { getService } from "../../Service.test";
 import { Utilities } from "./Utilities";
 import { ICapabilitiesData } from "./Utilities.types";
-import Service from "../../Service";
 
 const service = getService();
 
