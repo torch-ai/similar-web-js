@@ -4,9 +4,10 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { IServiceOptions } from "./Service.types";
+import { IServiceOptions, SimilarWebError } from "./Service.types";
 import { Utilities } from "./components/utilities/Utilities";
 import { TotalTraffic } from "./components/totalTraffic/TotalTraffic";
+import { IMeta } from "./components/Component.types";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -72,9 +73,15 @@ export default class Service {
   /**
    * Provides success response handling
    */
-  protected onResponseSuccess(response: AxiosResponse): Promise<AxiosResponse> {
+  protected onResponseSuccess(
+    response: AxiosResponse
+  ): Promise<AxiosResponse<IMeta<any>>> {
     // Return a promise as some requests may need to retry auth
     return new Promise((resolve, reject) => {
+      if (response.data.meta.error_code) {
+        return reject(this.getSimilarWebError(response.data.meta));
+      }
+
       resolve(response);
     });
   }
@@ -82,18 +89,26 @@ export default class Service {
   /**
    * Provides failure response handling
    */
-  protected onResponseError(error: AxiosError) {
+  protected onResponseError(error: AxiosError<IMeta<any>>) {
     // Return a promise as some requests may need to retry auth
     return new Promise((resolve, reject) => {
       if (error.response && error.response.status === 401) {
         this.options.onInvalidCredentials();
       }
 
-      // if (error.response?.data.error) {
-      //   reject(new Error(error.message));
-      // }
+      if (error.response?.data.meta.error_code) {
+        return reject(this.getSimilarWebError(error.response.data.meta));
+      }
 
       reject(error);
     });
+  }
+
+  protected getSimilarWebError(meta: IMeta<any>["meta"]) {
+    const { status, error_code, error_message } = meta;
+    return new SimilarWebError(
+      `${status} ${error_code} - ${error_message}`,
+      error_code
+    );
   }
 }

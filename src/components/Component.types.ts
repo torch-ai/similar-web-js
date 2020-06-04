@@ -34,7 +34,9 @@ export interface IDateRangeParams {
 export interface IMeta<Params> {
   meta: {
     request: IMetaRequest<Params>;
-    status: "Success" | string;
+    status: "Success" | "Error";
+    error_code?: number;
+    error_message?: string;
     last_updated: string; // "2019-02-28"
   };
 }

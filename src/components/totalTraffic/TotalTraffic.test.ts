@@ -1,6 +1,7 @@
 import { getService } from "../../Service.test";
 import { TotalTraffic } from "./TotalTraffic";
 import { ITotalTrafficVisitsParams } from "./TotalTraffice.types";
+import { SimilarWebError } from "../../Service.types";
 
 const service = getService();
 const testDomain = "bbc.com";
@@ -14,6 +15,24 @@ describe("service.totalTraffic", () => {
   });
 
   describe("visits", () => {
+    it("should throw an error if a bad domain is provided", async (done) => {
+      const options: ITotalTrafficVisitsParams = {
+        country: "world",
+        granularity: "Daily",
+        main_domain_only: false,
+      };
+
+      expect.assertions(3);
+      service.totalTraffic
+        .visits(testDomain.replace(".", ""), options)
+        .catch((error: SimilarWebError) => {
+          expect(error.isSimilarWebError).toBeTruthy();
+          expect(error.message).toMatch("Error");
+          expect(error.code).toBeTruthy();
+          done();
+        });
+    });
+
     it("should get", async (done) => {
       const options: ITotalTrafficVisitsParams = {
         country: "world",
