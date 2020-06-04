@@ -9,8 +9,7 @@ import { Utilities } from "./components/utilities/Utilities";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
-
-  protected static DEFAULT_TIMEOUT = 10000;
+  public static DEFAULT_TIMEOUT = 10000;
 
   protected client: AxiosInstance;
   protected options: IServiceOptions = {
