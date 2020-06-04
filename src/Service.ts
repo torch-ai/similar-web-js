@@ -8,6 +8,7 @@ import { IServiceOptions, SimilarWebError } from "./Service.types";
 import { Utilities } from "./components/utilities/Utilities";
 import { TotalTraffic } from "./components/totalTraffic/TotalTraffic";
 import { IMeta } from "./components/Component.types";
+import { SalesSolution } from "./components/salesSolution/SalesSolution";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -21,6 +22,7 @@ export default class Service {
 
   public utilities: Utilities;
   public totalTraffic: TotalTraffic;
+  public salesSolution: SalesSolution;
 
   public static formatDate(date: Date, granularity: "date" | "month" = "date") {
     const formattedDate = date.toISOString().split("T").shift();
@@ -56,6 +58,7 @@ export default class Service {
 
     this.utilities = new Utilities(this.client);
     this.totalTraffic = new TotalTraffic(this.client);
+    this.salesSolution = new SalesSolution(this.client);
     return this;
   }
 
