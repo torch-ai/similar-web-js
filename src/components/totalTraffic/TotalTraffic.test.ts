@@ -1,4 +1,4 @@
-import { getService } from "../../Service.test";
+import { expectMeta, getService } from "../../Service.test";
 import { TotalTraffic } from "./TotalTraffic";
 import {
   ITotalTrafficDeduplicatedAudienceParams,
@@ -6,26 +6,10 @@ import {
   ITotalTrafficParams,
 } from "./TotalTraffic.types";
 import { SimilarWebError } from "../../Service.types";
-import { IMeta } from "../Component.types";
 import Service from "../../Service";
 
 const service = getService();
 const testDomain = "bbc.com";
-
-const expectTrafficMeta = (
-  meta: IMeta<any>["meta"],
-  options:
-    | ITotalTrafficParams
-    | ITotalTrafficDeduplicatedAudienceParams
-    | ITotalTrafficDesktopMobileSplitParams
-) => {
-  expect(meta).toBeTruthy();
-  expect(meta.last_updated).toBeTruthy();
-  expect(meta.status).toBe("Success");
-  expect(meta.request.domain).toBe(testDomain);
-  expect(meta.request.country).toBe(options.country);
-  expect(meta.request.main_domain_only).toBe(options.main_domain_only);
-};
 
 /**
  * The tests
@@ -69,7 +53,7 @@ describe("service.totalTraffic", () => {
     it("should get", async (done) => {
       const results = await service.totalTraffic.visits(testDomain, options);
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, options);
+      expectMeta(results.meta, testDomain, options);
 
       expect(results.visits.length).toBeGreaterThan(0);
       const item = results.visits.shift();
@@ -87,7 +71,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, options);
+      expectMeta(results.meta, testDomain, options);
 
       expect(results.pages_per_visit.length).toBeGreaterThan(0);
       const item = results.pages_per_visit.shift();
@@ -105,7 +89,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, options);
+      expectMeta(results.meta, testDomain, options);
 
       expect(results.average_visit_duration.length).toBeGreaterThan(0);
       const item = results.average_visit_duration.shift();
@@ -123,7 +107,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, options);
+      expectMeta(results.meta, testDomain, options);
 
       expect(results.bounce_rate.length).toBeGreaterThan(0);
       const item = results.bounce_rate.shift();
@@ -146,7 +130,7 @@ describe("service.totalTraffic", () => {
         optionsWithDates
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, optionsWithDates);
+      expectMeta(results.meta, testDomain, optionsWithDates);
       expect(results.desktop_visit_share).toBeGreaterThanOrEqual(0);
       expect(results.mobile_web_visit_share).toBeGreaterThanOrEqual(0);
       done();
@@ -165,7 +149,7 @@ describe("service.totalTraffic", () => {
         optionsWithDates
       );
       expect(results).toBeTruthy();
-      expectTrafficMeta(results.meta, optionsWithDates);
+      expectMeta(results.meta, testDomain, optionsWithDates);
       expect(results.data.length).toBeGreaterThan(0);
       const data = results.data.shift();
       expect(data.date).toBeTruthy();

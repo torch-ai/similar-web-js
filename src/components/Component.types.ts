@@ -37,7 +37,7 @@ export interface IMeta<Params> {
     status: "Success" | "Error";
     error_code?: number;
     error_message?: string;
-    last_updated: string; // "2019-02-28"
+    last_updated?: string; // "2019-02-28"
   };
 }
 
