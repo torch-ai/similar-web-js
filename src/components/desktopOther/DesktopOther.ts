@@ -13,6 +13,7 @@ import {
 import { SimilarWebError } from "../../Service.types";
 
 export class DesktopOther extends Component {
+  public static All = "$All";
   /**
    * Returns the top 40 most similar websites to the given domain & their similarity score
    *
@@ -83,7 +84,7 @@ export class DesktopOther extends Component {
    * in web_desktop_data/snapshot_interval/end_date
    */
   public async topSitesDesktop(
-    category: "$All" | string,
+    category: typeof DesktopOther.All | string,
     options: IDesktopOtherTopSitesParams
   ): Promise<IDesktopOtherTopSites> {
     // The notes in the api docs suggest using capabilities, but the API responses suggest the describe end point
@@ -97,7 +98,7 @@ export class DesktopOther extends Component {
       .then((response) => response.data);
 
     if (
-      category !== "$All" &&
+      category !== DesktopOther.All &&
       description.response.categories.indexOf(category) === -1
     ) {
       throw new SimilarWebError(
@@ -122,6 +123,63 @@ export class DesktopOther extends Component {
           ...dateRange,
         },
       })
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns top 100 sites for Mobile Web, in a given Category.
+   *
+   * Category can be either "$All" or "${Category}", where {Category} is one value from the list available here:
+   * https://api.similarweb.com/v1/TopSites/categories.
+   *
+   * The start and end date have to be set as the previous month.
+   * Must be set to the last month for which there is data, in the YYYY-MM format.
+   * To retrieve this value you can use the Check Capabilities endpoint and get the value returned
+   * in web_desktop_data/snapshot_interval/end_date
+   */
+  public async topSitesMobile(
+    category: typeof DesktopOther.All | string,
+    options: IDesktopOtherTopSitesParams
+  ): Promise<IDesktopOtherTopSites> {
+    // The notes in the api docs suggest using capabilities, but the API responses suggest the describe end point
+    const description = await this.client
+      .get<IDesktopOtherTopSitesDescription>(
+        `v1/website/${category}/topsitesmobile/describe`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+
+    if (
+      category !== DesktopOther.All &&
+      description.response.categories.indexOf(category) === -1
+    ) {
+      throw new SimilarWebError(
+        `No category data available for: ${category}`,
+        0
+      );
+    }
+
+    const dateRange =
+      description.response.top_sites.countries[options.country] || undefined;
+    if (!dateRange) {
+      throw new SimilarWebError(
+        `No country data available for: ${options.country}`,
+        0
+      );
+    }
+
+    return this.client
+      .get<IDesktopOtherTopSites>(
+        `v1/website/${category}/topsitesmobile/topsites`,
+        {
+          params: {
+            ...options,
+            ...dateRange,
+          },
+        }
+      )
       .then((response) => response.data);
   }
 }

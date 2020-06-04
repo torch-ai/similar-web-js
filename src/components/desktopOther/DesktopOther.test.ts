@@ -125,4 +125,24 @@ describe("service.desktopOther", () => {
       done();
     });
   });
+
+  describe("top sites mobile", () => {
+    it("should get", async (done) => {
+      const options: IDesktopOtherTopSitesParams = {
+        ...defaultOptions,
+      };
+      const category = "$All";
+      const topSites = await service.desktopOther.topSitesMobile(
+        category,
+        options
+      );
+      expectMeta(topSites.meta, category, options);
+
+      const desktopSite = topSites.top_sites.shift();
+      expect(desktopSite.domain).toBeTruthy();
+      expect(desktopSite.rank).toBeGreaterThan(0);
+
+      done();
+    });
+  });
 });
