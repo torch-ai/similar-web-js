@@ -9,7 +9,7 @@ import {
   ITotalTrafficDeduplicatedAudience,
   ITotalTrafficDeduplicatedAudienceParams,
   ITotalTrafficDesktopMobileSplitParams,
-} from "./TotalTraffice.types";
+} from "./TotalTraffic.types";
 
 export class TotalTraffic extends Component {
   /**

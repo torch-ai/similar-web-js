@@ -4,7 +4,7 @@ import {
   ITotalTrafficDeduplicatedAudienceParams,
   ITotalTrafficDesktopMobileSplitParams,
   ITotalTrafficParams,
-} from "./TotalTraffice.types";
+} from "./TotalTraffic.types";
 import { SimilarWebError } from "../../Service.types";
 import { IMeta } from "../Component.types";
 import Service from "../../Service";
