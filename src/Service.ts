@@ -6,6 +6,7 @@ import axios, {
 } from "axios";
 import { IServiceOptions } from "./Service.types";
 import { Utilities } from "./components/utilities/Utilities";
+import { TotalTraffic } from "./components/totalTraffic/TotalTraffic";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -18,6 +19,7 @@ export default class Service {
   };
 
   public utilities: Utilities;
+  public totalTraffic: TotalTraffic;
 
   public static getServiceUrl() {
     return Service.PRODUCTION_SERVER;
@@ -42,6 +44,7 @@ export default class Service {
     );
 
     this.utilities = new Utilities(this.client);
+    this.totalTraffic = new TotalTraffic(this.client);
     return this;
   }
 
