@@ -39,3 +39,34 @@ export interface IDesktopOtherAudienceInterestsItem {
   domain: string; // "bbc.co.uk"
   has_adsense: boolean;
 }
+
+export interface IDesktopOtherCategoryRankParams extends IFormatParam {}
+
+export interface IDesktopOtherCategoryRank
+  extends IMeta<IDesktopOtherCategoryRankParams> {
+  category: string; // "Internet_and_Telecom/Social_Network"
+  rank: number; // 1
+}
+
+export interface IDesktopOtherTopSitesParams
+  extends IFormatParam,
+    ICountryParam {}
+
+export interface IDesktopOtherTopSitesDescription {
+  response: {
+    top_sites: {
+      countries: Record<string, IDateRangeParams>;
+    };
+    categories: string[];
+  };
+}
+
+export interface IDesktopOtherTopSites
+  extends IMeta<IDesktopOtherTopSitesParams> {
+  top_sites: IDesktopOtherTopSiteItem[];
+}
+
+export interface IDesktopOtherTopSiteItem {
+  rank: number; // 1
+  domain: string; // "spotify.com"
+}

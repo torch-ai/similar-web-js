@@ -43,7 +43,7 @@ export const expectMeta = (
   options: Partial<ICountryParam> &
     Partial<IMainDomainOnlyParam> &
     Partial<IFormatParam> &
-    Partial<IDateRangeParams>
+    Partial<IDateRangeParams> = {}
 ) => {
   expect(meta).toBeTruthy();
   expect(meta.status).toBe("Success");

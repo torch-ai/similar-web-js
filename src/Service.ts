@@ -94,7 +94,7 @@ export default class Service {
   ): Promise<AxiosResponse<IMeta<any>>> {
     // Return a promise as some requests may need to retry auth
     return new Promise((resolve, reject) => {
-      if (response.data.meta.error_code) {
+      if (response.data.meta?.error_code) {
         return reject(this.getSimilarWebError(response.data.meta));
       }
 
