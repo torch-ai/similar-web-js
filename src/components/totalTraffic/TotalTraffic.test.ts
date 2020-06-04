@@ -14,7 +14,7 @@ describe("service.totalTraffic", () => {
     expect(service.totalTraffic).toBeInstanceOf(TotalTraffic);
   });
 
-  describe("visits", () => {
+  describe("error handling", () => {
     it("should throw an error if a bad domain is provided", async (done) => {
       const options: ITotalTrafficVisitsParams = {
         country: "world",
@@ -32,7 +32,9 @@ describe("service.totalTraffic", () => {
           done();
         });
     });
+  });
 
+  describe("visits", () => {
     it("should get", async (done) => {
       const options: ITotalTrafficVisitsParams = {
         country: "world",
@@ -55,6 +57,37 @@ describe("service.totalTraffic", () => {
       const item = results.visits.shift();
       expect(item.date).toBeTruthy();
       expect(item.visits).toBeGreaterThan(0);
+
+      done();
+    });
+  });
+
+  describe("pages / visits", () => {
+    it("should get", async (done) => {
+      const options: ITotalTrafficVisitsParams = {
+        country: "world",
+        granularity: "Daily",
+        main_domain_only: false,
+      };
+      const results = await service.totalTraffic.pagesVisits(
+        testDomain,
+        options
+      );
+      expect(results).toBeTruthy();
+      expect(results.meta).toBeTruthy();
+      expect(results.meta.last_updated).toBeTruthy();
+      expect(results.meta.status).toBe("Success");
+      expect(results.meta.request.domain).toBe(testDomain);
+      expect(results.meta.request.country).toBe(options.country);
+      expect(results.meta.request.granularity).toBe(options.granularity);
+      expect(results.meta.request.main_domain_only).toBe(
+        options.main_domain_only
+      );
+      expect(results.pages_per_visit.length).toBeGreaterThan(0);
+
+      const item = results.pages_per_visit.shift();
+      expect(item.date).toBeTruthy();
+      expect(item.pages_per_visit).toBeGreaterThan(0);
 
       done();
     });
