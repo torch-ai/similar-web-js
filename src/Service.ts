@@ -9,6 +9,7 @@ import { Utilities } from "./components/utilities/Utilities";
 import { TotalTraffic } from "./components/totalTraffic/TotalTraffic";
 import { IMeta } from "./components/Component.types";
 import { SalesSolution } from "./components/salesSolution/SalesSolution";
+import { DesktopOther } from "./components/desktopOther/DesktopOther";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -20,6 +21,7 @@ export default class Service {
     onInvalidCredentials: () => {},
   };
 
+  public desktopOther: DesktopOther;
   public utilities: Utilities;
   public totalTraffic: TotalTraffic;
   public salesSolution: SalesSolution;
@@ -56,6 +58,7 @@ export default class Service {
       this.onResponseError.bind(this)
     );
 
+    this.desktopOther = new DesktopOther(this.client);
     this.utilities = new Utilities(this.client);
     this.totalTraffic = new TotalTraffic(this.client);
     this.salesSolution = new SalesSolution(this.client);
