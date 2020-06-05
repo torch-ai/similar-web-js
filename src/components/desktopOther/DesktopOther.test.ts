@@ -27,8 +27,8 @@ describe("service.desktopOther", () => {
     earlier.getUTCMonth()
   );
   const optionDates: IDateRange = {
-    start_date: Service.formatDate(earlierThanThat),
-    end_date: Service.formatDate(earlierThanThat),
+    start_date: Service.formatDate(earlierThanThat, "month"),
+    end_date: Service.formatDate(earlierThanThat, "month"),
   };
 
   it("should be an instance of DesktopOther", () => {
