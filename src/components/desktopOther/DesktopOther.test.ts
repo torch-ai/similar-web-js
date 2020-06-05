@@ -1,4 +1,8 @@
-import { expectWebsiteMeta, getService } from "../../Service.test";
+import {
+  expectCategoryRanking,
+  expectWebsiteMeta,
+  getService,
+} from "../../Service.test";
 import Service from "../../Service";
 import { DesktopOther } from "./DesktopOther";
 import { IDesktopOtherTopSitesParams } from "./DesktopOther.types";

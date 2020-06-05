@@ -9,6 +9,8 @@ import {
   IDesktopWebTrafficSourcesReferralsParams,
   IDesktopWebTrafficSourcesSocialReferrals,
   IDesktopWebTrafficSourcesReferrals,
+  IDesktopWebTrafficSourcesAdNetworks,
+  IDesktopWebTrafficSourcesAdNetworksParams,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -140,6 +142,25 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesReferrals>(
         `v1/website/${domain}/traffic-sources/referrals`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns leading Ad Networks sending traffic to a given domain as well as traffic share per Ad Network
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public adNetworks(
+    domain: string,
+    options: IDesktopWebTrafficSourcesAdNetworksParams
+  ): Promise<IDesktopWebTrafficSourcesAdNetworks> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesAdNetworks>(
+        `v1/website/${domain}/traffic-sources/ad-networks`,
         {
           params: options,
         }

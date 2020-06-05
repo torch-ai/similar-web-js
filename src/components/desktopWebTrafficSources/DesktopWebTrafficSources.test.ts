@@ -7,8 +7,8 @@ import { DesktopWebTrafficSources } from "./DesktopWebTrafficSources";
 import {
   IDesktopWebTrafficSourcesEngagementMetrics,
   IDesktopWebTrafficSourcesOverviewShareParams,
-  IDesktopWebTrafficSourcesSocialReferralsItem,
-  IDesktopWebTrafficSourcesSocialReferrals,
+  IDesktopWebTrafficSourcesEngagementMetricsParams,
+  IRankings,
 } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
@@ -24,6 +24,12 @@ const expectEngagementMetric = (
       expect(value.value).toBeGreaterThanOrEqual(0);
     });
   });
+};
+
+const expectRankings = (data: IRankings) => {
+  expect(data.global_ranking).toBeGreaterThan(0);
+  expect(data.category).toBeTruthy();
+  expect(data.category_ranking).toBeGreaterThan(0);
 };
 
 /**
@@ -93,7 +99,7 @@ describe("service.desktopWebTrafficSources", () => {
 
   describe("pages per visit", () => {
     it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+      const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
       };
@@ -111,7 +117,7 @@ describe("service.desktopWebTrafficSources", () => {
 
   describe("average visit duration", () => {
     it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+      const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
       };
@@ -129,7 +135,7 @@ describe("service.desktopWebTrafficSources", () => {
 
   describe("bounce rate", () => {
     it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+      const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
       };
@@ -147,15 +153,12 @@ describe("service.desktopWebTrafficSources", () => {
 
   describe("social referrals", () => {
     it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
-        ...defaultOptions,
-        granularity: "Monthly",
-      };
       const referrals = await service.desktopWebTrafficSources.socialReferrals(
         testDomain,
-        options
+        defaultOptions
       );
 
+      expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
       expect(referrals.visits).toBeGreaterThanOrEqual(0);
       referrals.social.forEach((referral) => {
         expect(referral.page).toBeTruthy();
@@ -166,26 +169,40 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
   describe("referrals", () => {
     it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
-        ...defaultOptions,
-        granularity: "Monthly",
-      };
       const referrals = await service.desktopWebTrafficSources.referrals(
         testDomain,
-        options
+        defaultOptions
       );
 
-      expectWebsiteMeta(referrals.meta, testDomain, options);
+      expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
       expect(referrals.visits).toBeGreaterThanOrEqual(0);
-      expect(referrals.global_ranking).toBeGreaterThan(0);
-      expect(referrals.category).toBeTruthy();
-      expect(referrals.category_ranking).toBeGreaterThan(0);
+      expectRankings(referrals);
       referrals.referrals.forEach((referral) => {
         expect(referral.share).toBeGreaterThan(0);
         expect(referral.domain).toBeTruthy();
         expectChange(referral);
+      });
+
+      done();
+    });
+  });
+
+  describe("ad networks", () => {
+    it("should get", async (done) => {
+      const adNetworks = await service.desktopWebTrafficSources.adNetworks(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(adNetworks.meta, testDomain, defaultOptions);
+      expectRankings(adNetworks);
+      adNetworks.ad_networks.forEach((adNetwork) => {
+        expect(adNetwork.ad_network).toBeTruthy();
+        expect(adNetwork.share).toBeGreaterThan(0);
+        expectChange(adNetwork);
       });
 
       done();

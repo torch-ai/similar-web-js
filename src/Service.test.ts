@@ -9,11 +9,6 @@ import {
   IMainDomainOnlyParam,
   IMeta,
 } from "./components/Component.types";
-import {
-  ITotalTrafficDeduplicatedAudienceParams,
-  ITotalTrafficDesktopMobileSplitParams,
-  ITotalTrafficParams,
-} from "./components/totalTraffic/TotalTraffic.types";
 
 export const loadConfig = () => {
   const result = config();

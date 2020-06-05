@@ -8,6 +8,17 @@ import {
   IMeta,
 } from "../Component.types";
 
+export interface IGlobalRanking {
+  global_ranking: number; // 154;
+}
+
+export interface ICategoryRanking {
+  category: string; // "News_and_Media";
+  category_ranking: number; // 21;
+}
+
+export interface IRankings extends IGlobalRanking, ICategoryRanking {}
+
 export interface IDesktopWebTrafficSourcesOverviewParams
   extends IFormatParam,
     ICountryParam,
@@ -86,15 +97,30 @@ export interface IDesktopWebTrafficSourcesSocialReferralsItem extends IChange {
 }
 
 export interface IDesktopWebTrafficSourcesReferrals
-  extends IMeta<IDesktopWebTrafficSourcesReferralsParams> {
+  extends IMeta<IDesktopWebTrafficSourcesReferralsParams>,
+    IRankings {
   referrals: IDesktopWebTrafficSourcesReferralsItem[];
   visits: number; // 9971413
-  global_ranking: number; // 154
-  category: string; // "News_and_Media"
-  category_ranking: number; // 21
 }
 
 export interface IDesktopWebTrafficSourcesReferralsItem extends IChange {
   share: number; // 0.0000028570463970084004;
   domain: string; // "pirate4x4.com";
+}
+
+export interface IDesktopWebTrafficSourcesAdNetworksParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesAdNetworks
+  extends IMeta<IDesktopWebTrafficSourcesAdNetworksParams>,
+    IRankings {
+  ad_networks: IDesktopWebTrafficSourcesAdNetworksItem[];
+}
+
+export interface IDesktopWebTrafficSourcesAdNetworksItem extends IChange {
+  ad_network: string; // "Outbrain";
+  share: number; // 0.47058985398621567;
 }
