@@ -1,5 +1,5 @@
 import {
-  expectCategoryRanking,
+  expectChange,
   expectWebsiteMeta,
   getService,
 } from "../../Service.test";
@@ -182,7 +182,7 @@ describe("service.desktopOther", () => {
       data.top_country_shares.forEach((shares) => {
         expect(shares.country).toBeGreaterThanOrEqual(0);
         expect(shares.value).toBeGreaterThanOrEqual(0);
-        expect(typeof shares.change === "number").toBeTruthy();
+        expectChange(shares);
       });
       expect(data.traffic_sources.search).toBeGreaterThanOrEqual(0);
       expect(data.traffic_sources.social).toBeGreaterThanOrEqual(0);
@@ -195,7 +195,7 @@ describe("service.desktopOther", () => {
       data.top_referring.forEach((referring) => {
         expect(referring.site).toBeTruthy();
         expect(referring.value).toBeGreaterThanOrEqual(0);
-        expect(typeof referring.change === "number").toBeTruthy();
+        expectChange(referring);
       });
       expect(data.total_referring).toBeGreaterThanOrEqual(0);
       data.top_destinations.forEach((destination) => {
@@ -227,7 +227,7 @@ describe("service.desktopOther", () => {
         expect(destination.icon).toBeTruthy();
         expect(destination.site).toBeTruthy();
         expect(destination.value).toBeTruthy();
-        expect(Number.isInteger(destination.change)).toBeTruthy();
+        expectChange(destination);
       });
       expect(data.display_ads_ratio).toBeGreaterThanOrEqual(0);
       data.top_social.forEach((site) => {

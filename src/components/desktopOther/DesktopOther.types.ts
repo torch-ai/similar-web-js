@@ -103,11 +103,10 @@ export interface IDesktopOtherApiLight {
     page_per_visit: number; // 2.4261377278380403
     bounce_rate: number; // 0.6059819454951987
   };
-  top_country_shares: IChange &
-    {
-      country: number; // 840
-      value: number; // 0.2761380577987913
-    }[];
+  top_country_shares: (IChange & {
+    country: number; // 840
+    value: number; // 0.2761380577987913
+  })[];
   traffic_sources: {
     search: number; //  0.29581501124261517
     social: number; //  0.10586656849496985
@@ -129,13 +128,12 @@ export interface IDesktopOtherApiLight {
   organic_search_share: number; // 0.9992762057407133
   paid_search_share: number; // 0.000723794259286703
   social_ratio: number; // 0.10586656849496985
-  top_social: IChange &
-    {
-      name: string; // "Facebook"
-      icon: string; // "https://site-images.similarcdn.com/image?url=facebook.com&t=2&s=1&h=be773d6b77aa3d59b6a671c5c27ad729b1ae77400e89776e2f749cce6b926c4b"
-      site: string; // "facebook.com"
-      value: number; // 0.5160428588675054
-    }[];
+  top_social: (IChange & {
+    name: string; // "Facebook"
+    icon: string; // "https://site-images.similarcdn.com/image?url=facebook.com&t=2&s=1&h=be773d6b77aa3d59b6a671c5c27ad729b1ae77400e89776e2f749cce6b926c4b"
+    site: string; // "facebook.com"
+    value: number; // 0.5160428588675054
+  })[];
   display_ads_ratio: number; // 0.0008191227563123541
   top_publishers: ISiteValueChange[];
   top_ad_networks: ISiteValueChange[];
