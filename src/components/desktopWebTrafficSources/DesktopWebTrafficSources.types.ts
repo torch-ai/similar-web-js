@@ -4,6 +4,7 @@ import {
   IDateGranularityParam,
   IDateRangeParams,
   IFormatParam,
+  ILimitParam,
   IMainDomainOnlyParam,
   IMeta,
 } from "../Component.types";
@@ -141,4 +142,28 @@ export interface IDesktopWebTrafficSourcesPublishers
 export interface IDesktopWebTrafficSourcesPublishersItem extends IChange {
   domain: string; // "jezebel.com";
   share: number; // 0.33569303543333884;
+}
+
+export interface IDesktopWebTrafficSourcesSearchKeywordsParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    ILimitParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesSearchKeywords
+  extends IMeta<IDesktopWebTrafficSourcesSearchKeywordsParams> {
+  search: IDesktopWebTrafficSourcesSearchKeywordsItem[];
+  visits: number; // 4235059
+  total_visits: number; // 4238824
+}
+
+export interface IDesktopWebTrafficSourcesSearchKeywordsItem extends IChange {
+  search_term: string; // "bbc news"
+  share: number; // 0.06702531838422214
+  visits: number; // 281089.5178785001
+  volume: number; // 38016670
+  cpc: number; // 1.3
+  url: string; // "http://www.bbc.com/news/live/election-2017-40171454"
+  position: number; // 9
 }

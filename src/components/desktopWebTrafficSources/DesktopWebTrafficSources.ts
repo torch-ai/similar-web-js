@@ -13,6 +13,8 @@ import {
   IDesktopWebTrafficSourcesAdNetworksParams,
   IDesktopWebTrafficSourcesPublishers,
   IDesktopWebTrafficSourcesPublishersParams,
+  IDesktopWebTrafficSourcesSearchKeywordsParams,
+  IDesktopWebTrafficSourcesSearchKeywords,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -183,6 +185,26 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesPublishers>(
         `v1/website/${domain}/traffic-sources/publishers`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the organic keywords for the given domain, keyword traffic share, change %,
+   * keyword volume, CPC, URL, and keyword position and # of organic visits on desktop.
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public organicSearchKeywords(
+    domain: string,
+    options: IDesktopWebTrafficSourcesSearchKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesSearchKeywords> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesSearchKeywords>(
+        `v1/website/${domain}/traffic-sources/organic-search`,
         {
           params: options,
         }

@@ -9,6 +9,7 @@ import {
   IDesktopWebTrafficSourcesOverviewShareParams,
   IDesktopWebTrafficSourcesEngagementMetricsParams,
   IRankings,
+  IDesktopWebTrafficSourcesSearchKeywordsParams,
 } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
@@ -223,6 +224,36 @@ describe("service.desktopWebTrafficSources", () => {
         expect(adNetwork.domain).toBeTruthy();
         expect(adNetwork.share).toBeGreaterThan(0);
         expectChange(adNetwork);
+      });
+
+      done();
+    });
+  });
+
+  describe("organic search keywords", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesSearchKeywordsParams = {
+        ...defaultOptions,
+        limit: 3,
+      };
+      const keywords = await service.desktopWebTrafficSources.organicSearchKeywords(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(keywords.meta, testDomain, options);
+      expect(keywords.visits).toBeGreaterThanOrEqual(0);
+      expect(keywords.total_visits).toBeGreaterThanOrEqual(0);
+      keywords.search.forEach((search) => {
+        expect(search.search_term).toBeTruthy();
+        expect(search.share).toBeGreaterThan(0);
+        expect(search.visits).toBeGreaterThan(0);
+        expect(search.volume).toBeGreaterThan(0);
+        expect(search.cpc).toBeGreaterThan(0);
+        expect(search.url).toBeTruthy();
+        expect(search.position).toBeGreaterThanOrEqual(0);
+        expect(search.share).toBeGreaterThan(0);
+        expectChange(search);
       });
 
       done();
