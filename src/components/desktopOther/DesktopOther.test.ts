@@ -1,4 +1,4 @@
-import { expectMeta, getService } from "../../Service.test";
+import { expectWebsiteMeta, getService } from "../../Service.test";
 import Service from "../../Service";
 import { DesktopOther } from "./DesktopOther";
 import { IDesktopOtherTopSitesParams } from "./DesktopOther.types";
@@ -34,7 +34,7 @@ describe("service.desktopOther", () => {
   describe("similar sites", () => {
     it("should get", async (done) => {
       const similarSites = await service.desktopOther.similarSites(testDomain);
-      expectMeta(similarSites.meta, testDomain);
+      expectWebsiteMeta(similarSites.meta, testDomain);
 
       expect(similarSites.similar_sites.length).toBeGreaterThan(0);
       const similarSite = similarSites.similar_sites.shift();
@@ -55,7 +55,7 @@ describe("service.desktopOther", () => {
         testDomain,
         options
       );
-      expectMeta(similarSites.meta, testDomain, options);
+      expectWebsiteMeta(similarSites.meta, testDomain, options);
 
       expect(similarSites.records.length).toBeGreaterThan(0);
       const record = similarSites.records.shift();
@@ -78,7 +78,7 @@ describe("service.desktopOther", () => {
         testDomain,
         options
       );
-      expectMeta(similarSites.meta, testDomain, options);
+      expectWebsiteMeta(similarSites.meta, testDomain, options);
 
       expect(similarSites.records.length).toBeGreaterThan(0);
       const record = similarSites.records.shift();
@@ -94,7 +94,7 @@ describe("service.desktopOther", () => {
   describe("category rank", () => {
     it("should get", async (done) => {
       const categoryRank = await service.desktopOther.categoryRank(testDomain);
-      expectMeta(categoryRank.meta, testDomain);
+      expectWebsiteMeta(categoryRank.meta, testDomain);
 
       expect(categoryRank.rank).toBeGreaterThan(0);
       expect(categoryRank.category).toBeTruthy();
@@ -113,7 +113,7 @@ describe("service.desktopOther", () => {
         category,
         options
       );
-      expectMeta(topSites.meta, category, options);
+      expectWebsiteMeta(topSites.meta, category, options);
 
       const desktopSite = topSites.top_sites.shift();
       expect(desktopSite.domain).toBeTruthy();
@@ -133,7 +133,7 @@ describe("service.desktopOther", () => {
         category,
         options
       );
-      expectMeta(topSites.meta, category, options);
+      expectWebsiteMeta(topSites.meta, category, options);
 
       const desktopSite = topSites.top_sites.shift();
       expect(desktopSite.domain).toBeTruthy();

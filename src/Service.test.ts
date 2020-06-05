@@ -37,9 +37,32 @@ export const getService = (): Service => {
   return service;
 };
 
+export const expectWebsiteMeta = (
+  meta: IMeta<any>["meta"],
+  domain: string,
+  options: Partial<ICountryParam> &
+    Partial<IMainDomainOnlyParam> &
+    Partial<IFormatParam> &
+    Partial<IDateRangeParams> = {}
+) => {
+  expectMeta(meta, options);
+  expect(meta.request.domain).toBe(domain);
+};
+
+export const expectKeywordsMeta = (
+  meta: IMeta<any>["meta"],
+  keyword: string,
+  options: Partial<ICountryParam> &
+    Partial<IMainDomainOnlyParam> &
+    Partial<IFormatParam> &
+    Partial<IDateRangeParams> = {}
+) => {
+  expectMeta(meta, options);
+  expect(meta.request.keyword).toBe(keyword);
+};
+
 export const expectMeta = (
   meta: IMeta<any>["meta"],
-  testDomain: string,
   options: Partial<ICountryParam> &
     Partial<IMainDomainOnlyParam> &
     Partial<IFormatParam> &
@@ -47,7 +70,6 @@ export const expectMeta = (
 ) => {
   expect(meta).toBeTruthy();
   expect(meta.status).toBe("Success");
-  expect(meta.request.domain).toBe(testDomain);
   if (options.country) {
     expect(meta.request.country).toBe(options.country);
   }

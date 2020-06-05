@@ -1,4 +1,4 @@
-import { expectMeta, getService } from "../../Service.test";
+import { expectWebsiteMeta, getService } from "../../Service.test";
 import { TotalTraffic } from "./TotalTraffic";
 import {
   ITotalTrafficDeduplicatedAudienceParams,
@@ -53,7 +53,7 @@ describe("service.totalTraffic", () => {
     it("should get", async (done) => {
       const results = await service.totalTraffic.visits(testDomain, options);
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, options);
+      expectWebsiteMeta(results.meta, testDomain, options);
 
       expect(results.visits.length).toBeGreaterThan(0);
       const item = results.visits.shift();
@@ -71,7 +71,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, options);
+      expectWebsiteMeta(results.meta, testDomain, options);
 
       expect(results.pages_per_visit.length).toBeGreaterThan(0);
       const item = results.pages_per_visit.shift();
@@ -89,7 +89,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, options);
+      expectWebsiteMeta(results.meta, testDomain, options);
 
       expect(results.average_visit_duration.length).toBeGreaterThan(0);
       const item = results.average_visit_duration.shift();
@@ -107,7 +107,7 @@ describe("service.totalTraffic", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, options);
+      expectWebsiteMeta(results.meta, testDomain, options);
 
       expect(results.bounce_rate.length).toBeGreaterThan(0);
       const item = results.bounce_rate.shift();
@@ -130,7 +130,7 @@ describe("service.totalTraffic", () => {
         optionsWithDates
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, optionsWithDates);
+      expectWebsiteMeta(results.meta, testDomain, optionsWithDates);
       expect(results.desktop_visit_share).toBeGreaterThanOrEqual(0);
       expect(results.mobile_web_visit_share).toBeGreaterThanOrEqual(0);
       done();
@@ -149,7 +149,7 @@ describe("service.totalTraffic", () => {
         optionsWithDates
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, optionsWithDates);
+      expectWebsiteMeta(results.meta, testDomain, optionsWithDates);
       expect(results.data.length).toBeGreaterThan(0);
       const data = results.data.shift();
       expect(data.date).toBeTruthy();

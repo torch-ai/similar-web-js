@@ -1,4 +1,4 @@
-import { expectMeta, getService } from "../../Service.test";
+import { expectWebsiteMeta, getService } from "../../Service.test";
 import { SalesSolution } from "./SalesSolution";
 import { ILeadEnrichmentParams } from "./SalesSolution.types";
 import Service from "../../Service";
@@ -34,7 +34,7 @@ describe("service.salesSolution", () => {
         options
       );
       expect(results).toBeTruthy();
-      expectMeta(results.meta, testDomain, options);
+      expectWebsiteMeta(results.meta, testDomain, options);
       expect(results.global_rank).toBeGreaterThan(0);
       expect(results.site_type).toBeTruthy();
       expect(results.employee_range).toBeTruthy();

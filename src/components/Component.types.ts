@@ -31,6 +31,10 @@ export interface IDateRangeParams {
   end_date: string; // 2018-01 format: YYYY-MM-DD or YYYY-MM
 }
 
+export interface ILimitParam {
+  limit: number;
+}
+
 export interface IMeta<Params> {
   meta: {
     request: IMetaRequest<Params>;
@@ -42,7 +46,8 @@ export interface IMeta<Params> {
 }
 
 export type IMetaRequest<Params> = Params & {
-  domain: string;
+  domain?: string;
+  keyword?: string;
   limit: null | any;
 };
 
