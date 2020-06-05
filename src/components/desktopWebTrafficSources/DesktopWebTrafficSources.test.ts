@@ -11,7 +11,10 @@ import {
   IRankings,
   IDesktopWebTrafficSourcesKeywordsParams,
   IDesktopWebTrafficSourcesKeywords,
+  IDesktopWebTrafficSourcesSearchVisitDistributionParams,
 } from "./DesktopWebTrafficSources.types";
+import { IDateRange } from "../Component.types";
+import Service from "../../Service";
 
 const service = getService();
 const testDomain = "bbc.com";
@@ -41,6 +44,17 @@ describe("service.desktopWebTrafficSources", () => {
   const defaultOptions = {
     country: "world",
     main_domain_only: false,
+  };
+  const earlier = new Date();
+  earlier.setUTCMonth(earlier.getUTCMonth() - 3);
+  const earlierThanThat = new Date();
+  earlierThanThat.setUTCFullYear(
+    earlier.getUTCFullYear() - 1,
+    earlier.getUTCMonth()
+  );
+  const optionDates: IDateRange = {
+    start_date: Service.formatDate(earlierThanThat, "month"),
+    end_date: Service.formatDate(earlierThanThat, "month"),
   };
 
   it("should be an instance of DesktopWebTrafficSources", () => {
@@ -290,6 +304,39 @@ describe("service.desktopWebTrafficSources", () => {
         options
       );
       expectKeywords(keywords);
+
+      done();
+    });
+  });
+
+  describe("search visits distribution", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesSearchVisitDistributionParams = {
+        ...defaultOptions,
+        ...optionDates,
+      };
+      const distribution = await service.desktopWebTrafficSources.searchVisitsDistribution(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(distribution.meta, testDomain, options);
+      distribution.data.forEach((distribution) => {
+        expect(distribution.date).toBeTruthy();
+        expect(distribution.total_search_visits).toBeGreaterThanOrEqual(0);
+        expect(
+          distribution.visits_distribution.organic_branded_visits
+        ).toBeGreaterThanOrEqual(0);
+        expect(
+          distribution.visits_distribution.organic_non_branded_visits
+        ).toBeGreaterThanOrEqual(0);
+        expect(
+          distribution.visits_distribution.paid_branded_visits
+        ).toBeGreaterThanOrEqual(0);
+        expect(
+          distribution.visits_distribution.paid_non_branded_visits
+        ).toBeGreaterThanOrEqual(0);
+      });
 
       done();
     });

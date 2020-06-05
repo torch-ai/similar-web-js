@@ -15,6 +15,8 @@ import {
   IDesktopWebTrafficSourcesPublishersParams,
   IDesktopWebTrafficSourcesKeywordsParams,
   IDesktopWebTrafficSourcesKeywords,
+  IDesktopWebTrafficSourcesSearchVisitDistribution,
+  IDesktopWebTrafficSourcesSearchVisitDistributionParams,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -265,6 +267,23 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesKeywords>(
         `v1/website/${domain}/traffic-sources/nonbranded-search`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the monthly paid & branded search visits distribution for Desktop traffic.
+   */
+  public searchVisitsDistribution(
+    domain: string,
+    options: IDesktopWebTrafficSourcesSearchVisitDistributionParams
+  ): Promise<IDesktopWebTrafficSourcesSearchVisitDistribution> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesSearchVisitDistribution>(
+        `v1/website/${domain}/traffic-sources/search-visits-distribution`,
         {
           params: options,
         }

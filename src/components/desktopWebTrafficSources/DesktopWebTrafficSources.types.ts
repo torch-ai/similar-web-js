@@ -167,3 +167,25 @@ export interface IDesktopWebTrafficSourcesKeywordsItem extends IChange {
   url: string; // "http://www.bbc.com/news/live/election-2017-40171454"
   position: number; // 9
 }
+
+export interface IDesktopWebTrafficSourcesSearchVisitDistributionParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    IDateRangeParams {}
+
+export interface IDesktopWebTrafficSourcesSearchVisitDistribution
+  extends IMeta<IDesktopWebTrafficSourcesSearchVisitDistributionParams> {
+  data: IDesktopWebTrafficSourcesSearchVisitDistributionsItem[];
+}
+
+export interface IDesktopWebTrafficSourcesSearchVisitDistributionsItem {
+  date: string; // "2017-11-01"
+  total_search_visits: number; // 1257718.6632760502
+  visits_distribution: {
+    organic_branded_visits: number; // 457979.7639933713
+    organic_non_branded_visits: number; // 798124.851221827
+    paid_branded_visits: number; // 588.4870901906123
+    paid_non_branded_visits: number; // 1025.5609706614603
+  };
+}
