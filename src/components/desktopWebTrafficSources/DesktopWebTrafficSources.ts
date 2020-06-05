@@ -1,11 +1,11 @@
 import Component from "../Component";
 import {
-  IDesktopWebTrafficSourcesEngagementMetricParams,
+  IDesktopWebTrafficSourcesEngagementMetricsParams,
   IDesktopWebTrafficSourcesOverview,
   IDesktopWebTrafficSourcesOverviewParams,
   IDesktopWebTrafficSourcesOverviewShare,
   IDesktopWebTrafficSourcesOverviewShareParams,
-  IDesktopWebTrafficSourcesPagesPerVisit,
+  IDesktopWebTrafficSourcesEngagementMetrics,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -55,11 +55,30 @@ export class DesktopWebTrafficSources extends Component {
    */
   public pagesPerVisit(
     domain: string,
-    options: IDesktopWebTrafficSourcesEngagementMetricParams
-  ): Promise<IDesktopWebTrafficSourcesPagesPerVisit> {
+    options: IDesktopWebTrafficSourcesEngagementMetricsParams
+  ): Promise<IDesktopWebTrafficSourcesEngagementMetrics> {
     return this.client
-      .get<IDesktopWebTrafficSourcesPagesPerVisit>(
+      .get<IDesktopWebTrafficSourcesEngagementMetrics>(
         `v1/website/${domain}/traffic-sources/engagement-metrics/pages-per-visit`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns estimated average visit duration by source on Desktop
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public averageVisitDuration(
+    domain: string,
+    options: IDesktopWebTrafficSourcesEngagementMetricsParams
+  ): Promise<IDesktopWebTrafficSourcesEngagementMetrics> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesEngagementMetrics>(
+        `v1/website/${domain}/traffic-sources/engagement-metrics/average-duration`,
         {
           params: options,
         }

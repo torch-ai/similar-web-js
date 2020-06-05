@@ -1,9 +1,24 @@
 import { expectWebsiteMeta, getService } from "../../Service.test";
 import { DesktopWebTrafficSources } from "./DesktopWebTrafficSources";
-import { IDesktopWebTrafficSourcesOverviewShareParams } from "./DesktopWebTrafficSources.types";
+import {
+  IDesktopWebTrafficSourcesEngagementMetrics,
+  IDesktopWebTrafficSourcesOverviewShareParams,
+} from "./DesktopWebTrafficSources.types";
 
 const service = getService();
 const testDomain = "bbc.com";
+
+const expectEngagementMetric = (
+  metrics: IDesktopWebTrafficSourcesEngagementMetrics
+) => {
+  metrics.data.forEach((datum) => {
+    expect(datum.source_type).toBeTruthy();
+    datum.values.forEach((value) => {
+      expect(value.date).toBeTruthy();
+      expect(value.value).toBeGreaterThanOrEqual(0);
+    });
+  });
+};
 
 /**
  * The tests
@@ -81,14 +96,25 @@ describe("service.desktopWebTrafficSources", () => {
       );
 
       expectWebsiteMeta(results.meta, testDomain, options);
+      expectEngagementMetric(results);
 
-      results.data.forEach((datum) => {
-        expect(datum.source_type).toBeTruthy();
-        datum.values.forEach((value) => {
-          expect(value.date).toBeTruthy();
-          expect(value.value).toBeGreaterThanOrEqual(0);
-        });
-      });
+      done();
+    });
+  });
+
+  describe("average visit duration", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const results = await service.desktopWebTrafficSources.averageVisitDuration(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(results.meta, testDomain, options);
+      expectEngagementMetric(results);
 
       done();
     });

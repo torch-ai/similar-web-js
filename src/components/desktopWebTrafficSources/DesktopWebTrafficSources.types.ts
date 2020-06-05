@@ -45,19 +45,19 @@ export interface IDesktopWebTrafficSourcesOverviewShareItem {
   }[];
 }
 
-export interface IDesktopWebTrafficSourcesEngagementMetricParams
+export interface IDesktopWebTrafficSourcesEngagementMetricsParams
   extends IFormatParam,
     ICountryParam,
     IMainDomainOnlyParam,
     IDateGranularityParam,
     Partial<IDateRangeParams> {}
 
-export interface IDesktopWebTrafficSourcesPagesPerVisit
-  extends IMeta<IDesktopWebTrafficSourcesEngagementMetricParams> {
-  data: IDesktopWebTrafficSourcesPagesPerVisitItem[];
+export interface IDesktopWebTrafficSourcesEngagementMetrics
+  extends IMeta<IDesktopWebTrafficSourcesEngagementMetricsParams> {
+  data: IDesktopWebTrafficSourcesEngagementMetricItem[];
 }
 
-export interface IDesktopWebTrafficSourcesPagesPerVisitItem {
+export interface IDesktopWebTrafficSourcesEngagementMetricItem {
   source_type: string; // "Social"
   values: {
     date: string; // "2017-11-01"
