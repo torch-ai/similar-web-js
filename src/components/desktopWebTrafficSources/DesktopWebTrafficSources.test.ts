@@ -1,9 +1,13 @@
-import { expectWebsiteMeta, getService } from "../../Service.test";
+import {
+  expectChange,
+  expectWebsiteMeta,
+  getService,
+} from "../../Service.test";
 import { DesktopWebTrafficSources } from "./DesktopWebTrafficSources";
 import {
   IDesktopWebTrafficSourcesEngagementMetrics,
   IDesktopWebTrafficSourcesOverviewShareParams,
-  IDesktopWebTrafficSourcesReferralsItem,
+  IDesktopWebTrafficSourcesSocialReferralsItem,
   IDesktopWebTrafficSourcesSocialReferrals,
 } from "./DesktopWebTrafficSources.types";
 
@@ -152,20 +156,37 @@ describe("service.desktopWebTrafficSources", () => {
         options
       );
 
-      expectWebsiteMeta(referrals.meta, testDomain, options);
-      const expectReferralItems = (
-        items: IDesktopWebTrafficSourcesReferralsItem[]
-      ) => {
-        items.forEach((item) => {
-          expect(item.page).toBeTruthy();
-          expect(item.share).toBeGreaterThan(0);
-          if (item.change !== null) {
-            expect(typeof item.change === "number").toBeTruthy();
-          }
-        });
-      };
       expect(referrals.visits).toBeGreaterThanOrEqual(0);
-      expectReferralItems(referrals.social);
+      referrals.social.forEach((referral) => {
+        expect(referral.page).toBeTruthy();
+        expect(referral.share).toBeGreaterThan(0);
+        expectChange(referral);
+      });
+
+      done();
+    });
+  });
+  describe("referrals", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const referrals = await service.desktopWebTrafficSources.referrals(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(referrals.meta, testDomain, options);
+      expect(referrals.visits).toBeGreaterThanOrEqual(0);
+      expect(referrals.global_ranking).toBeGreaterThan(0);
+      expect(referrals.category).toBeTruthy();
+      expect(referrals.category_ranking).toBeGreaterThan(0);
+      referrals.referrals.forEach((referral) => {
+        expect(referral.share).toBeGreaterThan(0);
+        expect(referral.domain).toBeTruthy();
+        expectChange(referral);
+      });
 
       done();
     });

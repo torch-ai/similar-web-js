@@ -8,6 +8,7 @@ import {
   IDesktopWebTrafficSourcesEngagementMetrics,
   IDesktopWebTrafficSourcesReferralsParams,
   IDesktopWebTrafficSourcesSocialReferrals,
+  IDesktopWebTrafficSourcesReferrals,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -120,6 +121,25 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesSocialReferrals>(
         `v1/website/${domain}/traffic-sources/social`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the referring websites for the given domain, and traffic share per referrer and # of referral visits
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public referrals(
+    domain: string,
+    options: IDesktopWebTrafficSourcesReferralsParams
+  ): Promise<IDesktopWebTrafficSourcesReferrals> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesReferrals>(
+        `v1/website/${domain}/traffic-sources/referrals`,
         {
           params: options,
         }

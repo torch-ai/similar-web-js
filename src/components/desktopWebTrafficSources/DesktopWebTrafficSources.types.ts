@@ -1,4 +1,5 @@
 import {
+  IChange,
   ICountryParam,
   IDateGranularityParam,
   IDateRangeParams,
@@ -74,19 +75,26 @@ export interface IDesktopWebTrafficSourcesReferralsParams
 
 export interface IDesktopWebTrafficSourcesSocialReferrals
   extends IMeta<IDesktopWebTrafficSourcesReferralsParams> {
-  social: IDesktopWebTrafficSourcesReferralsItem[];
+  social: IDesktopWebTrafficSourcesSocialReferralsItem[];
   visits: number;
+}
+
+export interface IDesktopWebTrafficSourcesSocialReferralsItem extends IChange {
+  page: string; // "facebook.com"
+  share: number; // 0.3338006606361748
+  children: any | null; // null
 }
 
 export interface IDesktopWebTrafficSourcesReferrals
   extends IMeta<IDesktopWebTrafficSourcesReferralsParams> {
-  social: IDesktopWebTrafficSourcesReferralsItem[];
-  visits: number;
+  referrals: IDesktopWebTrafficSourcesReferralsItem[];
+  visits: number; // 9971413
+  global_ranking: number; // 154
+  category: string; // "News_and_Media"
+  category_ranking: number; // 21
 }
 
-export interface IDesktopWebTrafficSourcesReferralsItem {
-  page: string; // "facebook.com"
-  share: number; // 0.3338006606361748
-  change: number | null; // null
-  children: any | null; // null
+export interface IDesktopWebTrafficSourcesReferralsItem extends IChange {
+  share: number; // 0.0000028570463970084004;
+  domain: string; // "pirate4x4.com";
 }

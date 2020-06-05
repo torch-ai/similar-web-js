@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import Service from "./Service";
 import { IServiceOptions } from "./Service.types";
 import {
+  IChange,
   ICountryParam,
   IDateRangeParams,
   IFormatParam,
@@ -85,6 +86,18 @@ export const expectMeta = (
   if (options.format) {
     expect(meta.request.format).toBe(options.format);
   }
+};
+
+export const expectChange = (data: IChange) => {
+  if (typeof data.change === "number") {
+    return expect(true).toBeTruthy();
+  }
+  if (typeof data.change === "string") {
+    return expect(
+      ["NaN", "Infinity"].indexOf(data.change)
+    ).toBeGreaterThanOrEqual(0);
+  }
+  expect(data.change).toBeNull();
 };
 
 /**
