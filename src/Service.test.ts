@@ -8,6 +8,7 @@ import {
   IFormatParam,
   IMainDomainOnlyParam,
   IMeta,
+  IRankings,
 } from "./components/Component.types";
 
 export const loadConfig = () => {
@@ -81,6 +82,12 @@ export const expectMeta = (
   if (options.format) {
     expect(meta.request.format).toBe(options.format);
   }
+};
+
+export const expectRankings = (data: IRankings) => {
+  expect(data.global_ranking).toBeGreaterThan(0);
+  expect(data.category).toBeTruthy();
+  expect(data.category_ranking).toBeGreaterThan(0);
 };
 
 export const expectChange = (data: IChange) => {

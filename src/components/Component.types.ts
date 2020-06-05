@@ -51,6 +51,17 @@ export type IMetaRequest<Params> = Params & {
   limit: null | any;
 };
 
+export interface IGlobalRanking {
+  global_ranking: number | null; // 154;
+}
+
+export interface ICategoryRanking {
+  category: string | null; // "News_and_Media";
+  category_ranking: number | null; // 21;
+}
+
+export interface IRankings extends IGlobalRanking, ICategoryRanking {}
+
 export interface ICountry {
   code: string; // "AR" | "world"
   name: string; // "Argentina" | "world"

@@ -7,18 +7,8 @@ import {
   ILimitParam,
   IMainDomainOnlyParam,
   IMeta,
+  IRankings,
 } from "../Component.types";
-
-export interface IGlobalRanking {
-  global_ranking: number | null; // 154;
-}
-
-export interface ICategoryRanking {
-  category: string | null; // "News_and_Media";
-  category_ranking: number | null; // 21;
-}
-
-export interface IRankings extends IGlobalRanking, ICategoryRanking {}
 
 export interface IDesktopWebTrafficSourcesOverviewParams
   extends IFormatParam,

@@ -1,5 +1,6 @@
 import {
   expectChange,
+  expectRankings,
   expectWebsiteMeta,
   getService,
 } from "../../Service.test";
@@ -8,7 +9,6 @@ import {
   IDesktopWebTrafficSourcesEngagementMetrics,
   IDesktopWebTrafficSourcesOverviewShareParams,
   IDesktopWebTrafficSourcesEngagementMetricsParams,
-  IRankings,
   IDesktopWebTrafficSourcesKeywordsParams,
   IDesktopWebTrafficSourcesKeywords,
   IDesktopWebTrafficSourcesSearchVisitDistributionParams,
@@ -29,12 +29,6 @@ const expectEngagementMetric = (
       expect(value.value).toBeGreaterThanOrEqual(0);
     });
   });
-};
-
-const expectRankings = (data: IRankings) => {
-  expect(data.global_ranking).toBeGreaterThan(0);
-  expect(data.category).toBeTruthy();
-  expect(data.category_ranking).toBeGreaterThan(0);
 };
 
 /**

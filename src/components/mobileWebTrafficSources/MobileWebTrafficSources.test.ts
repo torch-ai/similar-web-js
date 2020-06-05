@@ -1,7 +1,12 @@
 import { IDateRange } from "../Component.types";
 import Service from "../../Service";
 import { MobileWebTrafficSources } from "./MobileWebTrafficSources";
-import { expectWebsiteMeta, getService } from "../../Service.test";
+import {
+  expectChange,
+  expectRankings,
+  expectWebsiteMeta,
+  getService,
+} from "../../Service.test";
 import { IMobileWebTrafficSourcesOverviewShareParams } from "./MobileWebTrafficSources.types";
 
 const service = getService();
@@ -58,6 +63,27 @@ describe("service.desktopWebTrafficSources", () => {
             });
           });
         });
+
+      done();
+    });
+  });
+
+  describe("referrals", () => {
+    // TODO restore test once we get an answer back on why every site is 401 - Data not found
+    it.skip("should get", async (done) => {
+      const referrals = await service.mobileWebTrafficSources.referrals(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
+      expect(referrals.visits).toBeGreaterThanOrEqual(0);
+      expectRankings(referrals);
+      referrals.referrals.forEach((referral) => {
+        expect(referral.share).toBeGreaterThan(0);
+        expect(referral.domain).toBeTruthy();
+        expectChange(referral);
+      });
 
       done();
     });
