@@ -11,6 +11,7 @@ import { IMeta } from "./components/Component.types";
 import { SalesSolution } from "./components/salesSolution/SalesSolution";
 import { DesktopOther } from "./components/desktopOther/DesktopOther";
 import { DesktopKeywordAnalysis } from "./components/desktopKeywordAnalysis/DesktopKeywordAnalysis";
+import { DesktopWebTrafficSources } from "./components/desktopWebTrafficSources/DesktopWebTrafficSources";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -22,8 +23,9 @@ export default class Service {
     onInvalidCredentials: () => {},
   };
 
-  public desktopOther: DesktopOther;
   public desktopKeywordAnalysis: DesktopKeywordAnalysis;
+  public desktopOther: DesktopOther;
+  public desktopWebTrafficSources: DesktopWebTrafficSources;
   public utilities: Utilities;
   public totalTraffic: TotalTraffic;
   public salesSolution: SalesSolution;
@@ -60,8 +62,9 @@ export default class Service {
       this.onResponseError.bind(this)
     );
 
-    this.desktopOther = new DesktopOther(this.client);
     this.desktopKeywordAnalysis = new DesktopKeywordAnalysis(this.client);
+    this.desktopOther = new DesktopOther(this.client);
+    this.desktopWebTrafficSources = new DesktopWebTrafficSources(this.client);
     this.utilities = new Utilities(this.client);
     this.totalTraffic = new TotalTraffic(this.client);
     this.salesSolution = new SalesSolution(this.client);
