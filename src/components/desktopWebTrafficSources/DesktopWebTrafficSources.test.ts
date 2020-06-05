@@ -9,8 +9,8 @@ import {
   IDesktopWebTrafficSourcesOverviewShareParams,
   IDesktopWebTrafficSourcesEngagementMetricsParams,
   IRankings,
-  IDesktopWebTrafficSourcesSearchKeywordsParams,
-  IDesktopWebTrafficSourcesSearchKeywords,
+  IDesktopWebTrafficSourcesKeywordsParams,
+  IDesktopWebTrafficSourcesKeywords,
 } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
@@ -232,14 +232,12 @@ describe("service.desktopWebTrafficSources", () => {
   });
 
   describe("search keywords", () => {
-    const options: IDesktopWebTrafficSourcesSearchKeywordsParams = {
+    const options: IDesktopWebTrafficSourcesKeywordsParams = {
       ...defaultOptions,
       limit: 3,
     };
 
-    const expectKeywords = (
-      keywords: IDesktopWebTrafficSourcesSearchKeywords
-    ) => {
+    const expectKeywords = (keywords: IDesktopWebTrafficSourcesKeywords) => {
       expectWebsiteMeta(keywords.meta, testDomain, options);
       expect(keywords.visits).toBeGreaterThanOrEqual(0);
       expect(keywords.total_visits).toBeGreaterThanOrEqual(0);
@@ -247,8 +245,8 @@ describe("service.desktopWebTrafficSources", () => {
         expect(search.search_term).toBeTruthy();
         expect(search.share).toBeGreaterThan(0);
         expect(search.visits).toBeGreaterThan(0);
-        expect(search.volume).toBeGreaterThan(0);
-        expect(search.cpc).toBeGreaterThan(0);
+        expect(search.volume).toBeGreaterThanOrEqual(0);
+        expect(search.cpc).toBeGreaterThanOrEqual(0);
         expect(search.url).toBeTruthy();
         expect(search.position).toBeGreaterThanOrEqual(0);
         expect(search.share).toBeGreaterThan(0);
@@ -268,6 +266,26 @@ describe("service.desktopWebTrafficSources", () => {
 
     it("should get paid", async (done) => {
       const keywords = await service.desktopWebTrafficSources.paidSearchKeywords(
+        testDomain,
+        options
+      );
+      expectKeywords(keywords);
+
+      done();
+    });
+
+    it("should get branded", async (done) => {
+      const keywords = await service.desktopWebTrafficSources.brandedKeywords(
+        testDomain,
+        options
+      );
+      expectKeywords(keywords);
+
+      done();
+    });
+
+    it("should get non-branded", async (done) => {
+      const keywords = await service.desktopWebTrafficSources.nonBrandedKeywords(
         testDomain,
         options
       );

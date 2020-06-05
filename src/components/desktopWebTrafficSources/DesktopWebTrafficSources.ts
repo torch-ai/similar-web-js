@@ -13,8 +13,8 @@ import {
   IDesktopWebTrafficSourcesAdNetworksParams,
   IDesktopWebTrafficSourcesPublishers,
   IDesktopWebTrafficSourcesPublishersParams,
-  IDesktopWebTrafficSourcesSearchKeywordsParams,
-  IDesktopWebTrafficSourcesSearchKeywords,
+  IDesktopWebTrafficSourcesKeywordsParams,
+  IDesktopWebTrafficSourcesKeywords,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -200,10 +200,10 @@ export class DesktopWebTrafficSources extends Component {
    */
   public organicSearchKeywords(
     domain: string,
-    options: IDesktopWebTrafficSourcesSearchKeywordsParams
-  ): Promise<IDesktopWebTrafficSourcesSearchKeywords> {
+    options: IDesktopWebTrafficSourcesKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesKeywords> {
     return this.client
-      .get<IDesktopWebTrafficSourcesSearchKeywords>(
+      .get<IDesktopWebTrafficSourcesKeywords>(
         `v1/website/${domain}/traffic-sources/organic-search`,
         {
           params: options,
@@ -220,11 +220,51 @@ export class DesktopWebTrafficSources extends Component {
    */
   public paidSearchKeywords(
     domain: string,
-    options: IDesktopWebTrafficSourcesSearchKeywordsParams
-  ): Promise<IDesktopWebTrafficSourcesSearchKeywords> {
+    options: IDesktopWebTrafficSourcesKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesKeywords> {
     return this.client
-      .get<IDesktopWebTrafficSourcesSearchKeywords>(
+      .get<IDesktopWebTrafficSourcesKeywords>(
         `v1/website/${domain}/traffic-sources/paid-search`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the branded keywords for the given domain, keyword traffic share, change %,
+   * keyword volume, CPC, URL, and keyword position and # of branded visits on desktop.
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public brandedKeywords(
+    domain: string,
+    options: IDesktopWebTrafficSourcesKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesKeywords> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesKeywords>(
+        `v1/website/${domain}/traffic-sources/branded-search`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the non-branded keywords for the given domain, keyword traffic share, change %,
+   * keyword volume, CPC, URL, and keyword position and # of non-branded visits on desktop.
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public nonBrandedKeywords(
+    domain: string,
+    options: IDesktopWebTrafficSourcesKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesKeywords> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesKeywords>(
+        `v1/website/${domain}/traffic-sources/nonbranded-search`,
         {
           params: options,
         }

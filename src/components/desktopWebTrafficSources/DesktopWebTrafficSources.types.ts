@@ -144,21 +144,21 @@ export interface IDesktopWebTrafficSourcesPublishersItem extends IChange {
   share: number; // 0.33569303543333884;
 }
 
-export interface IDesktopWebTrafficSourcesSearchKeywordsParams
+export interface IDesktopWebTrafficSourcesKeywordsParams
   extends IFormatParam,
     ICountryParam,
     IMainDomainOnlyParam,
     ILimitParam,
     Partial<IDateRangeParams> {}
 
-export interface IDesktopWebTrafficSourcesSearchKeywords
-  extends IMeta<IDesktopWebTrafficSourcesSearchKeywordsParams> {
-  search: IDesktopWebTrafficSourcesSearchKeywordsItem[];
+export interface IDesktopWebTrafficSourcesKeywords
+  extends IMeta<IDesktopWebTrafficSourcesKeywordsParams> {
+  search: IDesktopWebTrafficSourcesKeywordsItem[];
   visits: number; // 4235059
   total_visits: number; // 4238824
 }
 
-export interface IDesktopWebTrafficSourcesSearchKeywordsItem extends IChange {
+export interface IDesktopWebTrafficSourcesKeywordsItem extends IChange {
   search_term: string; // "bbc news"
   share: number; // 0.06702531838422214
   visits: number; // 281089.5178785001
