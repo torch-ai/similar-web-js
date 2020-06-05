@@ -16,6 +16,7 @@ export interface IDesktopWebTrafficSourcesOverviewParams
 export interface IDesktopWebTrafficSourcesOverview
   extends IMeta<IDesktopWebTrafficSourcesOverviewParams> {
   overview: IDesktopWebTrafficSourcesOverviewItem[];
+  visits: number; // 30706465
 }
 
 export interface IDesktopWebTrafficSourcesOverviewItem {
@@ -63,4 +64,29 @@ export interface IDesktopWebTrafficSourcesEngagementMetricItem {
     date: string; // "2017-11-01"
     value: string; // 2.189143760425302
   }[];
+}
+
+export interface IDesktopWebTrafficSourcesReferralsParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesSocialReferrals
+  extends IMeta<IDesktopWebTrafficSourcesReferralsParams> {
+  social: IDesktopWebTrafficSourcesReferralsItem[];
+  visits: number;
+}
+
+export interface IDesktopWebTrafficSourcesReferrals
+  extends IMeta<IDesktopWebTrafficSourcesReferralsParams> {
+  social: IDesktopWebTrafficSourcesReferralsItem[];
+  visits: number;
+}
+
+export interface IDesktopWebTrafficSourcesReferralsItem {
+  page: string; // "facebook.com"
+  share: number; // 0.3338006606361748
+  change: number | null; // null
+  children: any | null; // null
 }

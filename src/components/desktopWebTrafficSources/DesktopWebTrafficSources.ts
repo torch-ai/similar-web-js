@@ -6,6 +6,8 @@ import {
   IDesktopWebTrafficSourcesOverviewShare,
   IDesktopWebTrafficSourcesOverviewShareParams,
   IDesktopWebTrafficSourcesEngagementMetrics,
+  IDesktopWebTrafficSourcesReferralsParams,
+  IDesktopWebTrafficSourcesSocialReferrals,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -98,6 +100,26 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesEngagementMetrics>(
         `v1/website/${domain}/traffic-sources/engagement-metrics/bounce-rate`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the leading social networks sending traffic to a given domain as well as traffic
+   * share per social network and # of social visits
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public socialReferrals(
+    domain: string,
+    options: IDesktopWebTrafficSourcesReferralsParams
+  ): Promise<IDesktopWebTrafficSourcesSocialReferrals> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesSocialReferrals>(
+        `v1/website/${domain}/traffic-sources/social`,
         {
           params: options,
         }

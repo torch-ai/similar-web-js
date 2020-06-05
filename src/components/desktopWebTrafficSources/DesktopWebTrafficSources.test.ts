@@ -3,6 +3,8 @@ import { DesktopWebTrafficSources } from "./DesktopWebTrafficSources";
 import {
   IDesktopWebTrafficSourcesEngagementMetrics,
   IDesktopWebTrafficSourcesOverviewShareParams,
+  IDesktopWebTrafficSourcesReferralsItem,
+  IDesktopWebTrafficSourcesSocialReferrals,
 } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
@@ -44,6 +46,7 @@ describe("service.desktopWebTrafficSources", () => {
 
       expectWebsiteMeta(results.meta, testDomain, defaultOptions);
 
+      expect(results.visits).toBeGreaterThanOrEqual(0);
       results.overview.forEach((source) => {
         expect(source.domain).toBeTruthy();
         expect(source.source_type).toBeTruthy();
@@ -133,6 +136,36 @@ describe("service.desktopWebTrafficSources", () => {
 
       expectWebsiteMeta(results.meta, testDomain, options);
       expectEngagementMetric(results);
+
+      done();
+    });
+  });
+
+  describe("social referrals", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const referrals = await service.desktopWebTrafficSources.socialReferrals(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(referrals.meta, testDomain, options);
+      const expectReferralItems = (
+        items: IDesktopWebTrafficSourcesReferralsItem[]
+      ) => {
+        items.forEach((item) => {
+          expect(item.page).toBeTruthy();
+          expect(item.share).toBeGreaterThan(0);
+          if (item.change !== null) {
+            expect(typeof item.change === "number").toBeTruthy();
+          }
+        });
+      };
+      expect(referrals.visits).toBeGreaterThanOrEqual(0);
+      expectReferralItems(referrals.social);
 
       done();
     });
