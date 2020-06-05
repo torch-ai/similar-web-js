@@ -87,7 +87,7 @@ export class DesktopWebTrafficSources extends Component {
   }
 
   /**
-   * Returns estimated average visit duration by source on Desktop
+   * Returns estimated bounce rate by source on Desktop
    *
    * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
    */
