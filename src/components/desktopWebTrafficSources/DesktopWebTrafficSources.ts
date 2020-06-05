@@ -277,6 +277,23 @@ export class DesktopWebTrafficSources extends Component {
   /**
    * Returns the monthly paid & branded search visits distribution for Desktop traffic.
    */
+  public questionsKeywords(
+    domain: string,
+    options: IDesktopWebTrafficSourcesKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesKeywords> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesKeywords>(
+        `v1/website/${domain}/traffic-sources/questions-search`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the monthly paid & branded search visits distribution for Desktop traffic.
+   */
   public searchVisitsDistribution(
     domain: string,
     options: IDesktopWebTrafficSourcesSearchVisitDistributionParams

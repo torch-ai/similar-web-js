@@ -307,6 +307,16 @@ describe("service.desktopWebTrafficSources", () => {
 
       done();
     });
+
+    it("should get questions", async (done) => {
+      const keywords = await service.desktopWebTrafficSources.questionsKeywords(
+        testDomain,
+        options
+      );
+      expectKeywords(keywords);
+
+      done();
+    });
   });
 
   describe("search visits distribution", () => {
