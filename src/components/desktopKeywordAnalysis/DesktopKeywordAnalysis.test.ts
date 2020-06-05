@@ -39,4 +39,24 @@ describe("service.desktopKeywordAnalysis", () => {
       done();
     });
   });
+
+  describe("competitors paid", () => {
+    it("should get", async (done) => {
+      const options: IDesktopKeywordAnalysisCompetitorsParams = {
+        ...defaultOptions,
+      };
+      const competitors = await service.desktopKeywordAnalysis.competitorsPaid(
+        testDomain,
+        options
+      );
+      expectMeta(competitors.meta, testDomain, options);
+
+      competitors.data.forEach((datum) => {
+        expect(datum.score).toBeGreaterThanOrEqual(0);
+        expect(datum.url).toBeTruthy();
+      });
+
+      done();
+    });
+  });
 });
