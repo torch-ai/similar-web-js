@@ -351,4 +351,24 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
+  describe("organic outgoing links", () => {
+    it("should get", async (done) => {
+      const referrals = await service.desktopWebTrafficSources.organicOutgoingLinks(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
+      expect(referrals.visits).toBeGreaterThanOrEqual(0);
+      expectRankings(referrals);
+      referrals.referrals.forEach((referral) => {
+        expect(referral.share).toBeGreaterThan(0);
+        expect(referral.domain).toBeTruthy();
+        expectChange(referral);
+      });
+
+      done();
+    });
+  });
 });

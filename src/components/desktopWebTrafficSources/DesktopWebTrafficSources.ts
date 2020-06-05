@@ -307,4 +307,21 @@ export class DesktopWebTrafficSources extends Component {
       )
       .then((response) => response.data);
   }
+
+  /**
+   * Returns the monthly paid & branded search visits distribution for Desktop traffic.
+   */
+  public organicOutgoingLinks(
+    domain: string,
+    options: IDesktopWebTrafficSourcesReferralsParams
+  ): Promise<IDesktopWebTrafficSourcesReferrals> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesReferrals>(
+        `v1/website/${domain}/traffic-sources/outgoing-referrals`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
 }
