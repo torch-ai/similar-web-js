@@ -124,3 +124,21 @@ export interface IDesktopWebTrafficSourcesAdNetworksItem extends IChange {
   ad_network: string; // "Outbrain";
   share: number; // 0.47058985398621567;
 }
+
+export interface IDesktopWebTrafficSourcesPublishersParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesPublishers
+  extends IMeta<IDesktopWebTrafficSourcesPublishersParams>,
+    IRankings {
+  publishers: IDesktopWebTrafficSourcesPublishersItem[];
+  visits: number; // 14157
+}
+
+export interface IDesktopWebTrafficSourcesPublishersItem extends IChange {
+  domain: string; // "jezebel.com";
+  share: number; // 0.33569303543333884;
+}

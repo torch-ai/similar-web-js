@@ -208,4 +208,24 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
+  describe("publishers", () => {
+    it("should get", async (done) => {
+      const publishers = await service.desktopWebTrafficSources.publishers(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(publishers.meta, testDomain, defaultOptions);
+      expectRankings(publishers);
+      expect(publishers.visits).toBeGreaterThan(0);
+      publishers.publishers.forEach((adNetwork) => {
+        expect(adNetwork.domain).toBeTruthy();
+        expect(adNetwork.share).toBeGreaterThan(0);
+        expectChange(adNetwork);
+      });
+
+      done();
+    });
+  });
 });
