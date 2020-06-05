@@ -1,5 +1,6 @@
 import Component from "../Component";
 import {
+  IDesktopOtherApiLight,
   IDesktopOtherAudienceInterests,
   IDesktopOtherAudienceInterestsParams,
   IDesktopOtherCategoryRank,
@@ -180,6 +181,15 @@ export class DesktopOther extends Component {
           },
         }
       )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns the exact data set as found in our Free tool for Worldwide data:
+   */
+  public apiLite(domain: string): Promise<IDesktopOtherApiLight> {
+    return this.client
+      .get<IDesktopOtherApiLight>(`v1/website/${domain}/general-data/all`)
       .then((response) => response.data);
   }
 }
