@@ -68,4 +68,29 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
+  describe("pages per visit", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const results = await service.desktopWebTrafficSources.pagesPerVisit(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(results.meta, testDomain, options);
+
+      results.data.forEach((datum) => {
+        expect(datum.source_type).toBeTruthy();
+        datum.values.forEach((value) => {
+          expect(value.date).toBeTruthy();
+          expect(value.value).toBeGreaterThanOrEqual(0);
+        });
+      });
+
+      done();
+    });
+  });
 });

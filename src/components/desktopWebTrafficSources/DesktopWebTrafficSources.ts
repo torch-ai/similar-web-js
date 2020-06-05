@@ -1,9 +1,11 @@
 import Component from "../Component";
 import {
+  IDesktopWebTrafficSourcesEngagementMetricParams,
   IDesktopWebTrafficSourcesOverview,
   IDesktopWebTrafficSourcesOverviewParams,
   IDesktopWebTrafficSourcesOverviewShare,
   IDesktopWebTrafficSourcesOverviewShareParams,
+  IDesktopWebTrafficSourcesPagesPerVisit,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -39,6 +41,25 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesOverviewShare>(
         `v1/website/${domain}/traffic-sources/overview-share`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns estimated pages per visit by source on Desktop
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public pagesPerVisit(
+    domain: string,
+    options: IDesktopWebTrafficSourcesEngagementMetricParams
+  ): Promise<IDesktopWebTrafficSourcesPagesPerVisit> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesPagesPerVisit>(
+        `v1/website/${domain}/traffic-sources/engagement-metrics/pages-per-visit`,
         {
           params: options,
         }

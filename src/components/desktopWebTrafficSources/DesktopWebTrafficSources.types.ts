@@ -44,3 +44,23 @@ export interface IDesktopWebTrafficSourcesOverviewShareItem {
     paid: number; // 5098.656956320019
   }[];
 }
+
+export interface IDesktopWebTrafficSourcesEngagementMetricParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    IDateGranularityParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesPagesPerVisit
+  extends IMeta<IDesktopWebTrafficSourcesEngagementMetricParams> {
+  data: IDesktopWebTrafficSourcesPagesPerVisitItem[];
+}
+
+export interface IDesktopWebTrafficSourcesPagesPerVisitItem {
+  source_type: string; // "Social"
+  values: {
+    date: string; // "2017-11-01"
+    value: string; // 2.189143760425302
+  }[];
+}
