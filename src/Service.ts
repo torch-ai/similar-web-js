@@ -12,6 +12,7 @@ import { SalesSolution } from "./components/salesSolution/SalesSolution";
 import { DesktopOther } from "./components/desktopOther/DesktopOther";
 import { DesktopKeywordAnalysis } from "./components/desktopKeywordAnalysis/DesktopKeywordAnalysis";
 import { DesktopWebTrafficSources } from "./components/desktopWebTrafficSources/DesktopWebTrafficSources";
+import { MobileWebTrafficSources } from "./components/mobileWebTrafficSources/MobileWebTrafficSources";
 
 export default class Service {
   protected static PRODUCTION_SERVER = "https://api.similarweb.com/";
@@ -26,9 +27,10 @@ export default class Service {
   public desktopKeywordAnalysis: DesktopKeywordAnalysis;
   public desktopOther: DesktopOther;
   public desktopWebTrafficSources: DesktopWebTrafficSources;
-  public utilities: Utilities;
-  public totalTraffic: TotalTraffic;
+  public mobileWebTrafficSources: MobileWebTrafficSources;
   public salesSolution: SalesSolution;
+  public totalTraffic: TotalTraffic;
+  public utilities: Utilities;
 
   public static formatDate(date: Date, granularity: "date" | "month" = "date") {
     const formattedDate = date.toISOString().split("T").shift();
@@ -65,9 +67,10 @@ export default class Service {
     this.desktopKeywordAnalysis = new DesktopKeywordAnalysis(this.client);
     this.desktopOther = new DesktopOther(this.client);
     this.desktopWebTrafficSources = new DesktopWebTrafficSources(this.client);
-    this.utilities = new Utilities(this.client);
-    this.totalTraffic = new TotalTraffic(this.client);
+    this.mobileWebTrafficSources = new MobileWebTrafficSources(this.client);
     this.salesSolution = new SalesSolution(this.client);
+    this.totalTraffic = new TotalTraffic(this.client);
+    this.utilities = new Utilities(this.client);
     return this;
   }
 
