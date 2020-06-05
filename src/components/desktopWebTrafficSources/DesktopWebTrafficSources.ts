@@ -85,4 +85,23 @@ export class DesktopWebTrafficSources extends Component {
       )
       .then((response) => response.data);
   }
+
+  /**
+   * Returns estimated average visit duration by source on Desktop
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public bounceRate(
+    domain: string,
+    options: IDesktopWebTrafficSourcesEngagementMetricsParams
+  ): Promise<IDesktopWebTrafficSourcesEngagementMetrics> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesEngagementMetrics>(
+        `v1/website/${domain}/traffic-sources/engagement-metrics/bounce-rate`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
 }

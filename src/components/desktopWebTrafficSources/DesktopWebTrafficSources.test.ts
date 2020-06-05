@@ -119,4 +119,22 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
+  describe("bounce rate", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const results = await service.desktopWebTrafficSources.bounceRate(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(results.meta, testDomain, options);
+      expectEngagementMetric(results);
+
+      done();
+    });
+  });
 });
