@@ -1,13 +1,7 @@
 import { expectMeta, getService } from "../../Service.test";
 import Service from "../../Service";
 import { DesktopOther } from "./DesktopOther";
-import {
-  IDesktopOtherAudienceInterestsParams,
-  IDesktopOtherTopSitesParams,
-  IKeywordValueChange,
-  ISiteRank,
-  ISiteValueChange,
-} from "./DesktopOther.types";
+import { IDesktopOtherTopSitesParams } from "./DesktopOther.types";
 import { IDateRange } from "../Component.types";
 
 const service = getService();
