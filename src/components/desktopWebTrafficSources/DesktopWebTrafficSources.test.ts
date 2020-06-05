@@ -1,5 +1,6 @@
 import { expectWebsiteMeta, getService } from "../../Service.test";
 import { DesktopWebTrafficSources } from "./DesktopWebTrafficSources";
+import { IDesktopWebTrafficSourcesOverviewShareParams } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
 const testDomain = "bbc.com";
@@ -33,6 +34,36 @@ describe("service.desktopWebTrafficSources", () => {
         expect(source.source_type).toBeTruthy();
         expect(source.share).toBeGreaterThan(0);
       });
+
+      done();
+    });
+  });
+
+  describe("overview share", () => {
+    it("should get", async (done) => {
+      const options: IDesktopWebTrafficSourcesOverviewShareParams = {
+        ...defaultOptions,
+        granularity: "Monthly",
+      };
+      const results = await service.desktopWebTrafficSources.overviewShare(
+        testDomain,
+        options
+      );
+
+      expectWebsiteMeta(results.meta, testDomain, options);
+
+      Object.keys(results.visits)
+        .map((key) => results.visits[key])
+        .forEach((sources) => {
+          sources.forEach((source) => {
+            expect(source.source_type).toBeTruthy();
+            source.visits.forEach((visits) => {
+              expect(visits.date).toBeTruthy();
+              expect(visits.organic).toBeGreaterThanOrEqual(0);
+              expect(visits.paid).toBeGreaterThanOrEqual(0);
+            });
+          });
+        });
 
       done();
     });

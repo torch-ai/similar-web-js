@@ -2,6 +2,8 @@ import Component from "../Component";
 import {
   IDesktopWebTrafficSourcesOverview,
   IDesktopWebTrafficSourcesOverviewParams,
+  IDesktopWebTrafficSourcesOverviewShare,
+  IDesktopWebTrafficSourcesOverviewShareParams,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -18,6 +20,25 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesOverview>(
         `v1/website/${domain}/traffic-sources/overview`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns estimated desktop traffic volume by source
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public overviewShare(
+    domain: string,
+    options: IDesktopWebTrafficSourcesOverviewShareParams
+  ): Promise<IDesktopWebTrafficSourcesOverviewShare> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesOverviewShare>(
+        `v1/website/${domain}/traffic-sources/overview-share`,
         {
           params: options,
         }
