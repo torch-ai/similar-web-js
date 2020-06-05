@@ -211,4 +211,24 @@ export class DesktopWebTrafficSources extends Component {
       )
       .then((response) => response.data);
   }
+
+  /**
+   * Returns the organic keywords for the given domain, keyword traffic share, change %,
+   * keyword volume, CPC, URL, and keyword position and # of paid visits on desktop.
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public paidSearchKeywords(
+    domain: string,
+    options: IDesktopWebTrafficSourcesSearchKeywordsParams
+  ): Promise<IDesktopWebTrafficSourcesSearchKeywords> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesSearchKeywords>(
+        `v1/website/${domain}/traffic-sources/paid-search`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
 }

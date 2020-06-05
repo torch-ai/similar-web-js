@@ -10,6 +10,7 @@ import {
   IDesktopWebTrafficSourcesEngagementMetricsParams,
   IRankings,
   IDesktopWebTrafficSourcesSearchKeywordsParams,
+  IDesktopWebTrafficSourcesSearchKeywords,
 } from "./DesktopWebTrafficSources.types";
 
 const service = getService();
@@ -230,17 +231,15 @@ describe("service.desktopWebTrafficSources", () => {
     });
   });
 
-  describe("organic search keywords", () => {
-    it("should get", async (done) => {
-      const options: IDesktopWebTrafficSourcesSearchKeywordsParams = {
-        ...defaultOptions,
-        limit: 3,
-      };
-      const keywords = await service.desktopWebTrafficSources.organicSearchKeywords(
-        testDomain,
-        options
-      );
+  describe("search keywords", () => {
+    const options: IDesktopWebTrafficSourcesSearchKeywordsParams = {
+      ...defaultOptions,
+      limit: 3,
+    };
 
+    const expectKeywords = (
+      keywords: IDesktopWebTrafficSourcesSearchKeywords
+    ) => {
       expectWebsiteMeta(keywords.meta, testDomain, options);
       expect(keywords.visits).toBeGreaterThanOrEqual(0);
       expect(keywords.total_visits).toBeGreaterThanOrEqual(0);
@@ -255,6 +254,24 @@ describe("service.desktopWebTrafficSources", () => {
         expect(search.share).toBeGreaterThan(0);
         expectChange(search);
       });
+    };
+
+    it("should get organic", async (done) => {
+      const keywords = await service.desktopWebTrafficSources.organicSearchKeywords(
+        testDomain,
+        options
+      );
+      expectKeywords(keywords);
+
+      done();
+    });
+
+    it("should get paid", async (done) => {
+      const keywords = await service.desktopWebTrafficSources.paidSearchKeywords(
+        testDomain,
+        options
+      );
+      expectKeywords(keywords);
 
       done();
     });
