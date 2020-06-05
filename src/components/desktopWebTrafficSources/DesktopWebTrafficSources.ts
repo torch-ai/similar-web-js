@@ -17,6 +17,9 @@ import {
   IDesktopWebTrafficSourcesKeywords,
   IDesktopWebTrafficSourcesSearchVisitDistribution,
   IDesktopWebTrafficSourcesSearchVisitDistributionParams,
+  IDesktopWebTrafficSourcesOutgoingAdsAdNetworks,
+  IDesktopWebTrafficSourcesOutgoingAdsParams,
+  IDesktopWebTrafficSourcesOutgoingAdsAdvertisers,
 } from "./DesktopWebTrafficSources.types";
 
 export class DesktopWebTrafficSources extends Component {
@@ -309,7 +312,9 @@ export class DesktopWebTrafficSources extends Component {
   }
 
   /**
-   * Returns the monthly paid & branded search visits distribution for Desktop traffic.
+   * Returns traffic share of all organic outgoing links for the domain and # of outgoing visits
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
    */
   public organicOutgoingLinks(
     domain: string,
@@ -318,6 +323,44 @@ export class DesktopWebTrafficSources extends Component {
     return this.client
       .get<IDesktopWebTrafficSourcesReferrals>(
         `v1/website/${domain}/traffic-sources/outgoing-referrals`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns traffic share of all Ad Networks receiving traffic from the domain
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public outgoingAdNetworks(
+    domain: string,
+    options: IDesktopWebTrafficSourcesOutgoingAdsParams
+  ): Promise<IDesktopWebTrafficSourcesOutgoingAdsAdNetworks> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesOutgoingAdsAdNetworks>(
+        `v1/website/${domain}/traffic-sources/outgoing-referrals`,
+        {
+          params: options,
+        }
+      )
+      .then((response) => response.data);
+  }
+
+  /**
+   * Returns traffic share of all advertisers receiving traffic from the domain
+   *
+   * To retrieve Last 28 days remove the start_date & end_date parameters from the URL
+   */
+  public outgoingAdAdvertisers(
+    domain: string,
+    options: IDesktopWebTrafficSourcesOutgoingAdsParams
+  ): Promise<IDesktopWebTrafficSourcesOutgoingAdsAdvertisers> {
+    return this.client
+      .get<IDesktopWebTrafficSourcesOutgoingAdsAdvertisers>(
+        `v1/website/${domain}/traffic-sources/outgoing-ads-advertisers`,
         {
           params: options,
         }

@@ -371,4 +371,42 @@ describe("service.desktopWebTrafficSources", () => {
       done();
     });
   });
+
+  describe("outgoing ad networks", () => {
+    it("should get", async (done) => {
+      const networks = await service.desktopWebTrafficSources.outgoingAdNetworks(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(networks.meta, testDomain, defaultOptions);
+      expectRankings(networks);
+      networks.data.forEach((network) => {
+        expect(network.share).toBeGreaterThan(0);
+        expect(network.domain).toBeTruthy();
+        expectChange(network);
+      });
+
+      done();
+    });
+  });
+
+  describe("outgoing ad advertisers", () => {
+    it("should get", async (done) => {
+      const advertisers = await service.desktopWebTrafficSources.outgoingAdAdvertisers(
+        testDomain,
+        defaultOptions
+      );
+
+      expectWebsiteMeta(advertisers.meta, testDomain, defaultOptions);
+      expect(advertisers.visits).toBeGreaterThanOrEqual(0);
+      advertisers.advertisers.forEach((advertiser) => {
+        expect(advertiser.share).toBeGreaterThan(0);
+        expect(advertiser.domain).toBeTruthy();
+        expectChange(advertiser);
+      });
+
+      done();
+    });
+  });
 });

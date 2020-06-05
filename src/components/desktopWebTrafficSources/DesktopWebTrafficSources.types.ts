@@ -10,12 +10,12 @@ import {
 } from "../Component.types";
 
 export interface IGlobalRanking {
-  global_ranking: number; // 154;
+  global_ranking: number | null; // 154;
 }
 
 export interface ICategoryRanking {
-  category: string; // "News_and_Media";
-  category_ranking: number; // 21;
+  category: string | null; // "News_and_Media";
+  category_ranking: number | null; // 21;
 }
 
 export interface IRankings extends IGlobalRanking, ICategoryRanking {}
@@ -188,4 +188,27 @@ export interface IDesktopWebTrafficSourcesSearchVisitDistributionsItem {
     paid_branded_visits: number; // 588.4870901906123
     paid_non_branded_visits: number; // 1025.5609706614603
   };
+}
+
+export interface IDesktopWebTrafficSourcesOutgoingAdsParams
+  extends IFormatParam,
+    ICountryParam,
+    IMainDomainOnlyParam,
+    Partial<IDateRangeParams> {}
+
+export interface IDesktopWebTrafficSourcesOutgoingAdsAdNetworks
+  extends IMeta<IDesktopWebTrafficSourcesOutgoingAdsParams>,
+    IRankings {
+  data: IDesktopWebTrafficSourcesOutgoingAdsItem[];
+}
+
+export interface IDesktopWebTrafficSourcesOutgoingAdsAdvertisers
+  extends IMeta<IDesktopWebTrafficSourcesOutgoingAdsParams> {
+  advertisers: IDesktopWebTrafficSourcesOutgoingAdsItem[];
+  visits: number; // 13123
+}
+
+export interface IDesktopWebTrafficSourcesOutgoingAdsItem extends IChange {
+  share: number; //  0.6496048675949996
+  domain: string; //  "victoriahearts.com"
 }
