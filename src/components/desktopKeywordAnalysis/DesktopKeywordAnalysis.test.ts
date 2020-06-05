@@ -91,4 +91,28 @@ describe("service.desktopKeywordAnalysis", () => {
       done();
     });
   });
+
+  describe("analyze paid", () => {
+    it("should get", async (done) => {
+      const options: IDesktopKeywordAnalysisAnalyzeParams = {
+        ...defaultOptions,
+        limit: 3,
+      };
+      const analysis = await service.desktopKeywordAnalysis.analyzePaid(
+        testKeyword,
+        options
+      );
+      expectKeywordsMeta(analysis.meta, testKeyword, options);
+
+      analysis.traffic_breakdown.forEach((datum) => {
+        expect(datum.domain).toBeTruthy();
+        expect(datum.traffic_share).toBeGreaterThan(0);
+        expect(Number.isInteger(datum.position)).toBeTruthy();
+        expect(datum.destination_url).toBeTruthy();
+        expect(datum.website_categories).toBeTruthy();
+      });
+
+      done();
+    });
+  });
 });
