@@ -32,7 +32,7 @@ export default new Service(options);
 ## Calls
 
 ```ts
-import service from "./similar-web.ts";
+import service from "./similar-web";
 
 try {
   const capabilities = await service.utilities.capabilities();
@@ -49,6 +49,8 @@ This package is provided through an MIT license. Usage of this package is freely
 SimilarWeb itself has its [own requirements](https://www.similarweb.com/corp/legal/terms/). Please contact them for your account and terms.
 
 # Contributing
+
+Refer to the official documentation on [Postman](https://documenter.getpostman.com/view/5388671/RzfcNs8W?version=latest).
 
 ## Installation
 
