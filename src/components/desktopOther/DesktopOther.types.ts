@@ -1,11 +1,9 @@
 import {
   ICountryParam,
-  IDateGranularityParam,
   IDateRangeParams,
   IFormatParam,
   IMainDomainOnlyParam,
   IMeta,
-  IShowVerifiedParam,
 } from "../Component.types";
 
 export interface IDesktopOtherSimilarSitesParams
