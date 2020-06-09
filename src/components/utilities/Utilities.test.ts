@@ -70,4 +70,26 @@ describe("service.utilities", () => {
       done();
     });
   });
+
+  describe("getCountryName", () => {
+    const usName = "United States of America";
+    it("should return United States for 'us'", () => {
+      const lowerResult = service.utilities.getCountryName("us");
+      expect(lowerResult).toBe(usName);
+      const upperResult = service.utilities.getCountryName("US");
+      expect(upperResult).toBe(usName);
+    });
+
+    it("should return United States for 'usa'", () => {
+      const lowerResult = service.utilities.getCountryName("usa");
+      expect(lowerResult).toBe(usName);
+      const upperResult = service.utilities.getCountryName("USA");
+      expect(upperResult).toBe(usName);
+    });
+
+    it("should return United States for 840", () => {
+      const result = service.utilities.getCountryName(840);
+      expect(result).toBe(usName);
+    });
+  });
 });
