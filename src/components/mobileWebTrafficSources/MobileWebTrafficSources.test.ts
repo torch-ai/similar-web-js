@@ -8,6 +8,7 @@ import {
   getService,
 } from "../../Service.test";
 import { IMobileWebTrafficSourcesOverviewShareParams } from "./MobileWebTrafficSources.types";
+import disableAutomock = jest.disableAutomock;
 
 const service = getService();
 const testDomain = "bbc.com";
@@ -39,10 +40,10 @@ describe("service.desktopWebTrafficSources", () => {
   });
 
   describe("overview share", () => {
-    // TODO restore test once we get an answer back on why every site is 401 - Data not found
-    it.skip("should get", async (done) => {
+    it("should get", async (done) => {
       const options: IMobileWebTrafficSourcesOverviewShareParams = {
         ...defaultOptions,
+        ...optionDates,
         granularity: "monthly",
       };
       const results = await service.mobileWebTrafficSources.overviewShare(
@@ -69,11 +70,13 @@ describe("service.desktopWebTrafficSources", () => {
   });
 
   describe("referrals", () => {
-    // TODO restore test once we get an answer back on why every site is 401 - Data not found
-    it.skip("should get", async (done) => {
+    it("should get", async (done) => {
       const referrals = await service.mobileWebTrafficSources.referrals(
         testDomain,
-        defaultOptions
+        {
+          ...optionDates,
+          ...defaultOptions,
+        }
       );
 
       expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
