@@ -265,6 +265,10 @@ describe("service.desktopOther", () => {
           expect(app.rating_count).toBeGreaterThanOrEqual(0);
           expect(typeof app.valid === "boolean").toBeTruthy();
         });
+      data.tags.forEach((tag) => {
+        expect(tag.tag).toBeTruthy();
+        expect(tag.strength).toBeGreaterThan(0);
+      });
       expect(data.daily_visits_min_date).toBeTruthy();
       expect(data.daily_visits_max_date).toBeTruthy();
 

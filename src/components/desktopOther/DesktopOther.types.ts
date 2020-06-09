@@ -158,6 +158,10 @@ export interface IDesktopOtherApiLight {
   >;
   daily_visits_min_date: string; // "2019-04-01"
   daily_visits_max_date: string; // "2019-09-30"
+  tags: {
+    tag: string;
+    strength: number;
+  }[];
 }
 
 export interface ISiteValueChange extends IChange {
