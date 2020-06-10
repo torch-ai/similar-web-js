@@ -165,7 +165,7 @@ export interface IDesktopOtherApiLight {
 }
 
 export interface ISiteValueChange extends IChange {
-  site: number; // "bbc.co.uk"
+  site: string; // "bbc.co.uk"
   value: number; // 0.7109386251464077
 }
 
