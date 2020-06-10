@@ -170,7 +170,7 @@ export interface ISiteValueChange extends IChange {
 }
 
 export interface IKeywordValueChange extends IChange {
-  keyword: number; // "bbc news"
+  keyword: string; // "bbc news"
   value: number; // 0.7109386251464077
 }
 
