@@ -29,27 +29,26 @@ describe("service.desktopKeywordAnalysis", () => {
   });
 
   describe("competitors organic", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopKeywordAnalysisCompetitorsParams = {
         ...defaultOptions,
       };
-      const competitors = await service.desktopKeywordAnalysis.competitorsOrganic(
-        testDomain,
-        options
-      );
+      const competitors =
+        await service.desktopKeywordAnalysis.competitorsOrganic(
+          testDomain,
+          options
+        );
       expectWebsiteMeta(competitors.meta, testDomain, options);
 
       competitors.data.forEach((datum) => {
         expect(datum.score).toBeGreaterThanOrEqual(0);
         expect(datum.url).toBeTruthy();
       });
-
-      done();
     });
   });
 
   describe("competitors paid", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopKeywordAnalysisCompetitorsParams = {
         ...defaultOptions,
       };
@@ -63,13 +62,11 @@ describe("service.desktopKeywordAnalysis", () => {
         expect(datum.score).toBeGreaterThanOrEqual(0);
         expect(datum.url).toBeTruthy();
       });
-
-      done();
     });
   });
 
   describe("analyze organic", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopKeywordAnalysisAnalyzeParams = {
         ...defaultOptions,
         limit: 3,
@@ -87,13 +84,11 @@ describe("service.desktopKeywordAnalysis", () => {
         expect(datum.destination_url).toBeTruthy();
         expect(datum.website_categories).toBeTruthy();
       });
-
-      done();
     });
   });
 
   describe("analyze paid", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopKeywordAnalysisAnalyzeParams = {
         ...defaultOptions,
         limit: 3,
@@ -111,8 +106,6 @@ describe("service.desktopKeywordAnalysis", () => {
         expect(datum.destination_url).toBeTruthy();
         expect(datum.website_categories).toBeTruthy();
       });
-
-      done();
     });
   });
 });
