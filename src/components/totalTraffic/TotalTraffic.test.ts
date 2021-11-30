@@ -36,7 +36,7 @@ describe("service.totalTraffic", () => {
   });
 
   describe("error handling", () => {
-    it("should throw an error if a bad domain is provided", async (done) => {
+    it("should throw an error if a bad domain is provided", async () => {
       expect.assertions(3);
       service.totalTraffic
         .visits(testDomain.replace(".", ""), options)
@@ -44,13 +44,12 @@ describe("service.totalTraffic", () => {
           expect(error.isSimilarWebError).toBeTruthy();
           expect(error.message).toMatch("Error");
           expect(error.code).toBeTruthy();
-          done();
         });
     });
   });
 
   describe("visits", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const results = await service.totalTraffic.visits(testDomain, options);
       expect(results).toBeTruthy();
       expectWebsiteMeta(results.meta, testDomain, options);
@@ -59,13 +58,11 @@ describe("service.totalTraffic", () => {
       const item = results.visits.shift();
       expect(item.date).toBeTruthy();
       expect(item.visits).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("pages / visits", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const results = await service.totalTraffic.pagesVisits(
         testDomain,
         options
@@ -77,13 +74,11 @@ describe("service.totalTraffic", () => {
       const item = results.pages_per_visit.shift();
       expect(item.date).toBeTruthy();
       expect(item.pages_per_visit).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("average visit duration", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const results = await service.totalTraffic.averageVisitDuration(
         testDomain,
         options
@@ -95,13 +90,11 @@ describe("service.totalTraffic", () => {
       const item = results.average_visit_duration.shift();
       expect(item.date).toBeTruthy();
       expect(item.average_visit_duration).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("bounce rate", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const results = await service.totalTraffic.bounceRate(
         testDomain,
         options
@@ -113,13 +106,11 @@ describe("service.totalTraffic", () => {
       const item = results.bounce_rate.shift();
       expect(item.date).toBeTruthy();
       expect(item.bounce_rate).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("desktop mobile split", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const optionsWithDates: ITotalTrafficDesktopMobileSplitParams = {
         ...defaultOptions,
         start_date: Service.formatDate(earlierThanThat, "month"),
@@ -133,12 +124,11 @@ describe("service.totalTraffic", () => {
       expectWebsiteMeta(results.meta, testDomain, optionsWithDates);
       expect(results.desktop_visit_share).toBeGreaterThanOrEqual(0);
       expect(results.mobile_web_visit_share).toBeGreaterThanOrEqual(0);
-      done();
     });
   });
 
   describe("deduplicated audience", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const optionsWithDates: ITotalTrafficDeduplicatedAudienceParams = {
         ...defaultOptions,
         start_date: Service.formatDate(earlierThanThat, "month"),
@@ -165,8 +155,6 @@ describe("service.totalTraffic", () => {
       expect(
         data.dedup_data.total_deduplicated_audience
       ).toBeGreaterThanOrEqual(0);
-
-      done();
     });
   });
 });

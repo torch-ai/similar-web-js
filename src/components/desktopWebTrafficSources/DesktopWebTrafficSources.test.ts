@@ -58,7 +58,7 @@ describe("service.desktopWebTrafficSources", () => {
   });
 
   describe("overview", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const results = await service.desktopWebTrafficSources.overview(
         testDomain,
         defaultOptions
@@ -72,13 +72,11 @@ describe("service.desktopWebTrafficSources", () => {
         expect(source.source_type).toBeTruthy();
         expect(source.share).toBeGreaterThan(0);
       });
-
-      done();
     });
   });
 
   describe("overview share", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopWebTrafficSourcesOverviewShareParams = {
         ...defaultOptions,
         granularity: "Monthly",
@@ -102,13 +100,11 @@ describe("service.desktopWebTrafficSources", () => {
             });
           });
         });
-
-      done();
     });
   });
 
   describe("pages per visit", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
@@ -120,31 +116,28 @@ describe("service.desktopWebTrafficSources", () => {
 
       expectWebsiteMeta(results.meta, testDomain, options);
       expectEngagementMetric(results);
-
-      done();
     });
   });
 
   describe("average visit duration", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
       };
-      const results = await service.desktopWebTrafficSources.averageVisitDuration(
-        testDomain,
-        options
-      );
+      const results =
+        await service.desktopWebTrafficSources.averageVisitDuration(
+          testDomain,
+          options
+        );
 
       expectWebsiteMeta(results.meta, testDomain, options);
       expectEngagementMetric(results);
-
-      done();
     });
   });
 
   describe("bounce rate", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopWebTrafficSourcesEngagementMetricsParams = {
         ...defaultOptions,
         granularity: "Monthly",
@@ -156,13 +149,11 @@ describe("service.desktopWebTrafficSources", () => {
 
       expectWebsiteMeta(results.meta, testDomain, options);
       expectEngagementMetric(results);
-
-      done();
     });
   });
 
   describe("social referrals", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const referrals = await service.desktopWebTrafficSources.socialReferrals(
         testDomain,
         defaultOptions
@@ -175,13 +166,11 @@ describe("service.desktopWebTrafficSources", () => {
         expect(referral.share).toBeGreaterThan(0);
         expectChange(referral);
       });
-
-      done();
     });
   });
 
   describe("referrals", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const referrals = await service.desktopWebTrafficSources.referrals(
         testDomain,
         defaultOptions
@@ -195,13 +184,11 @@ describe("service.desktopWebTrafficSources", () => {
         expect(referral.domain).toBeTruthy();
         expectChange(referral);
       });
-
-      done();
     });
   });
 
   describe("ad networks", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const adNetworks = await service.desktopWebTrafficSources.adNetworks(
         testDomain,
         defaultOptions
@@ -214,13 +201,11 @@ describe("service.desktopWebTrafficSources", () => {
         expect(adNetwork.share).toBeGreaterThan(0);
         expectChange(adNetwork);
       });
-
-      done();
     });
   });
 
   describe("publishers", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const publishers = await service.desktopWebTrafficSources.publishers(
         testDomain,
         defaultOptions
@@ -234,8 +219,6 @@ describe("service.desktopWebTrafficSources", () => {
         expect(adNetwork.share).toBeGreaterThan(0);
         expectChange(adNetwork);
       });
-
-      done();
     });
   });
 
@@ -262,67 +245,61 @@ describe("service.desktopWebTrafficSources", () => {
       });
     };
 
-    it("should get organic", async (done) => {
-      const keywords = await service.desktopWebTrafficSources.organicSearchKeywords(
-        testDomain,
-        options
-      );
+    it("should get organic", async () => {
+      const keywords =
+        await service.desktopWebTrafficSources.organicSearchKeywords(
+          testDomain,
+          options
+        );
       expectKeywords(keywords);
-
-      done();
     });
 
-    it("should get paid", async (done) => {
-      const keywords = await service.desktopWebTrafficSources.paidSearchKeywords(
-        testDomain,
-        options
-      );
+    it("should get paid", async () => {
+      const keywords =
+        await service.desktopWebTrafficSources.paidSearchKeywords(
+          testDomain,
+          options
+        );
       expectKeywords(keywords);
-
-      done();
     });
 
-    it("should get branded", async (done) => {
+    it("should get branded", async () => {
       const keywords = await service.desktopWebTrafficSources.brandedKeywords(
         testDomain,
         options
       );
       expectKeywords(keywords);
-
-      done();
     });
 
-    it("should get non-branded", async (done) => {
-      const keywords = await service.desktopWebTrafficSources.nonBrandedKeywords(
-        testDomain,
-        options
-      );
+    it("should get non-branded", async () => {
+      const keywords =
+        await service.desktopWebTrafficSources.nonBrandedKeywords(
+          testDomain,
+          options
+        );
       expectKeywords(keywords);
-
-      done();
     });
 
-    it("should get questions", async (done) => {
+    it("should get questions", async () => {
       const keywords = await service.desktopWebTrafficSources.questionsKeywords(
         testDomain,
         options
       );
       expectKeywords(keywords);
-
-      done();
     });
   });
 
   describe("search visits distribution", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopWebTrafficSourcesSearchVisitDistributionParams = {
         ...defaultOptions,
         ...optionDates,
       };
-      const distribution = await service.desktopWebTrafficSources.searchVisitsDistribution(
-        testDomain,
-        options
-      );
+      const distribution =
+        await service.desktopWebTrafficSources.searchVisitsDistribution(
+          testDomain,
+          options
+        );
 
       expectWebsiteMeta(distribution.meta, testDomain, options);
       distribution.data.forEach((distribution) => {
@@ -341,17 +318,16 @@ describe("service.desktopWebTrafficSources", () => {
           distribution.visits_distribution.paid_non_branded_visits
         ).toBeGreaterThanOrEqual(0);
       });
-
-      done();
     });
   });
 
   describe("organic outgoing links", () => {
-    it("should get", async (done) => {
-      const referrals = await service.desktopWebTrafficSources.organicOutgoingLinks(
-        testDomain,
-        defaultOptions
-      );
+    it("should get", async () => {
+      const referrals =
+        await service.desktopWebTrafficSources.organicOutgoingLinks(
+          testDomain,
+          defaultOptions
+        );
 
       expectWebsiteMeta(referrals.meta, testDomain, defaultOptions);
       expect(referrals.visits).toBeGreaterThanOrEqual(0);
@@ -361,17 +337,16 @@ describe("service.desktopWebTrafficSources", () => {
         expect(referral.domain).toBeTruthy();
         expectChange(referral);
       });
-
-      done();
     });
   });
 
   describe("outgoing ad networks", () => {
-    it("should get", async (done) => {
-      const networks = await service.desktopWebTrafficSources.outgoingAdNetworks(
-        testDomain,
-        defaultOptions
-      );
+    it("should get", async () => {
+      const networks =
+        await service.desktopWebTrafficSources.outgoingAdNetworks(
+          testDomain,
+          defaultOptions
+        );
 
       expectWebsiteMeta(networks.meta, testDomain, defaultOptions);
       expectRankings(networks);
@@ -380,17 +355,16 @@ describe("service.desktopWebTrafficSources", () => {
         expect(network.domain).toBeTruthy();
         expectChange(network);
       });
-
-      done();
     });
   });
 
   describe("outgoing ad advertisers", () => {
-    it("should get", async (done) => {
-      const advertisers = await service.desktopWebTrafficSources.outgoingAdAdvertisers(
-        testDomain,
-        defaultOptions
-      );
+    it("should get", async () => {
+      const advertisers =
+        await service.desktopWebTrafficSources.outgoingAdAdvertisers(
+          testDomain,
+          defaultOptions
+        );
 
       expectWebsiteMeta(advertisers.meta, testDomain, defaultOptions);
       expect(advertisers.visits).toBeGreaterThanOrEqual(0);
@@ -399,8 +373,6 @@ describe("service.desktopWebTrafficSources", () => {
         expect(advertiser.domain).toBeTruthy();
         expectChange(advertiser);
       });
-
-      done();
     });
   });
 });

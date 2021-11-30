@@ -40,7 +40,7 @@ describe("service.desktopWebTrafficSources", () => {
   });
 
   describe("overview share", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IMobileWebTrafficSourcesOverviewShareParams = {
         ...defaultOptions,
         ...optionDates,
@@ -64,13 +64,11 @@ describe("service.desktopWebTrafficSources", () => {
             });
           });
         });
-
-      done();
     });
   });
 
   describe("referrals", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const referrals = await service.mobileWebTrafficSources.referrals(
         testDomain,
         {
@@ -87,8 +85,6 @@ describe("service.desktopWebTrafficSources", () => {
         expect(referral.domain).toBeTruthy();
         expectChange(referral);
       });
-
-      done();
     });
   });
 });

@@ -36,7 +36,7 @@ describe("service.desktopOther", () => {
   });
 
   describe("similar sites", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const similarSites = await service.desktopOther.similarSites(testDomain);
       expectWebsiteMeta(similarSites.meta, testDomain);
 
@@ -44,13 +44,11 @@ describe("service.desktopOther", () => {
       const similarSite = similarSites.similar_sites.shift();
       expect(similarSite.score).toBeGreaterThan(0);
       expect(similarSite.url).toBeTruthy();
-
-      done();
     });
   });
 
   describe("audience interest", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options = {
         ...defaultOptions,
         ...optionDates,
@@ -67,13 +65,11 @@ describe("service.desktopOther", () => {
       expect(record.overlap).toBeGreaterThan(0);
       expect(record.domain).toBeTruthy();
       expect(typeof record.has_adsense === "boolean").toBeTruthy();
-
-      done();
     });
   });
 
   describe("audience interest", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options = {
         ...defaultOptions,
         ...optionDates,
@@ -90,25 +86,21 @@ describe("service.desktopOther", () => {
       expect(record.overlap).toBeGreaterThan(0);
       expect(record.domain).toBeTruthy();
       expect(typeof record.has_adsense === "boolean").toBeTruthy();
-
-      done();
     });
   });
 
   describe("category rank", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const categoryRank = await service.desktopOther.categoryRank(testDomain);
       expectWebsiteMeta(categoryRank.meta, testDomain);
 
       expect(categoryRank.rank).toBeGreaterThan(0);
       expect(categoryRank.category).toBeTruthy();
-
-      done();
     });
   });
 
   describe("top sites desktop", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopOtherTopSitesParams = {
         ...defaultOptions,
       };
@@ -122,13 +114,11 @@ describe("service.desktopOther", () => {
       const desktopSite = topSites.top_sites.shift();
       expect(desktopSite.domain).toBeTruthy();
       expect(desktopSite.rank).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("top sites mobile", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: IDesktopOtherTopSitesParams = {
         ...defaultOptions,
       };
@@ -142,13 +132,11 @@ describe("service.desktopOther", () => {
       const desktopSite = topSites.top_sites.shift();
       expect(desktopSite.domain).toBeTruthy();
       expect(desktopSite.rank).toBeGreaterThan(0);
-
-      done();
     });
   });
 
   describe("api lite", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const data = await service.desktopOther.apiLite(testDomain);
 
       expect(data.site_name).toBeTruthy();
@@ -271,8 +259,6 @@ describe("service.desktopOther", () => {
       });
       expect(data.daily_visits_min_date).toBeTruthy();
       expect(data.daily_visits_max_date).toBeTruthy();
-
-      done();
     });
   });
 });

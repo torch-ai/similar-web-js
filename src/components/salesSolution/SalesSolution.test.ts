@@ -23,7 +23,7 @@ describe("service.salesSolution", () => {
   });
 
   describe("lead enrichment", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const options: ILeadEnrichmentParams = {
         country: "us",
         start_date: Service.formatDate(earlierThanThat, "month"),
@@ -104,14 +104,12 @@ describe("service.salesSolution", () => {
         expect(geographyShare.country).toBeGreaterThan(0);
         expect(geographyShare.share).toBeGreaterThanOrEqual(0);
       }
-
-      done();
     });
   });
 
   describe("technographics", () => {
     // At the time of writing, this was returning 403 Forbidden for my login
-    it.skip("should get", async (done) => {
+    it.skip("should get", async () => {
       const technographics = await service.salesSolution.technographics(
         testDomain
       );
@@ -128,8 +126,6 @@ describe("service.salesSolution", () => {
       expect(technology.free_paid).toBeTruthy();
       // expect(technology.sub_category).toBeTruthy();
       expect(technology.technology_name).toBeTruthy();
-
-      done();
     });
   });
 });

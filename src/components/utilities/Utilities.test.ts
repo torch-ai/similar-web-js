@@ -13,7 +13,7 @@ describe("service.utilities", () => {
   });
 
   describe("capabilities", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const capabilities = await service.utilities.capabilities();
       expect(capabilities).toBeTruthy();
       expect(capabilities.remaining_hits).toBeGreaterThanOrEqual(0);
@@ -34,12 +34,11 @@ describe("service.utilities", () => {
       expectCapabilitiesData(capabilities.app_engagement_data);
       expectCapabilitiesData(capabilities.web_desktop_data);
       expectCapabilitiesData(capabilities.web_mobile_data);
-      done();
     });
   });
 
   describe("categories", () => {
-    it("should get", async (done) => {
+    it("should get", async () => {
       const categories = await service.utilities.categories();
       expect(categories).toBeTruthy();
       expect(categories.Arts_and_Entertainment).toBeTruthy();
@@ -66,8 +65,6 @@ describe("service.utilities", () => {
       expect(categories.Travel_and_Tourism).toBeTruthy();
       expect(categories.Vehicles).toBeTruthy();
       expect(categories.Adult).toBeTruthy();
-
-      done();
     });
   });
 
